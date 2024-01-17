@@ -4,7 +4,7 @@ import gsap, { Power3 } from "gsap";
 
 function Greeting() {
   const values = {
-    username: "Ishamla",
+    username: "Anubhav",
     timeOfTheDay: "Morning",
   };
   console.log("greeting styles:", styles);

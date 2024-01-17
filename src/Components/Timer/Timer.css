@@ -1,0 +1,28 @@
+.timerCounterCharacter {
+  font-size: 14px;
+  color: #fa8383;
+}
+.timerCounterContainer {
+  /* flex: 1; */
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  color: #fa8383;
+  /* border: 1px solid sandybrown; */
+  height: 100%;
+  font-family: "Jura";
+}
+.timerContainer {
+  /* border: 1px solid cyan; */
+  height: 100px;
+  min-height: 80px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.timerSliderContainer {
+  flex: 1;
+  margin-right: 6px;
+  /* border: 1px solid white; */
+}

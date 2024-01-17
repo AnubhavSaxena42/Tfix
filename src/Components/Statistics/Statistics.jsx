@@ -907,7 +907,7 @@ function Statistics() {
         minHeight: "200px",
         width: "100%",
         flexDirection: "column",
-        border: "1px solid red",
+        // border: "1px solid red",
         alignItems: "center",
         alignSelf: "center",
         display: "flex",
@@ -919,14 +919,14 @@ function Statistics() {
         style={{
           height: "90px",
           width: "100%",
-          border: "1px solid yellow",
+          // border: "1px solid yellow",
         }}
       ></div>
       <div
         style={{
-          height: "100px",
+          height: "160px",
           width: "100%",
-          border: "1px solid yellow",
+          // border: "1px solid yellow",
           // marginBottom: "5%",
         }}
       ></div>
@@ -936,7 +936,7 @@ function Statistics() {
         style={{
           height: "35%",
           width: "33%",
-          border: "1px solid blue",
+          // border: "1px solid blue",
         }}
       >
         <DataBox
@@ -1016,7 +1016,7 @@ function Statistics() {
           style={{
             height: "80%",
             width: "100%",
-            border: "1px solid purple",
+            // border: "1px solid purple",
             overflow: "visible",
           }}
         >
@@ -1062,7 +1062,7 @@ function Statistics() {
               />
             </linearGradient>
           </defs>
-          <path stroke="green" strokeWidth={0.2} d="M10 0 V100" />
+          {/* <path stroke="green" strokeWidth={0.2} d="M10 0 V100" />
           <path stroke="green" strokeWidth={0.2} d="M20 0 V100" />
           <path stroke="green" strokeWidth={0.2} d="M30 0 V100" />
           <path stroke="green" strokeWidth={0.2} d="M40 0 V100" />
@@ -1118,7 +1118,7 @@ function Statistics() {
           <path stroke="green" strokeWidth={0.2} d="M0 90 H-200" />
 
           <path stroke="green" strokeWidth={1} d="M50 0 V100" />
-          <path stroke="green" strokeWidth={1} d="M0 50 H100" />
+          <path stroke="green" strokeWidth={1} d="M0 50 H100" /> */}
           <path
             ref={bluePath}
             stroke="url(#blueGradient)"
@@ -1414,7 +1414,7 @@ function Statistics() {
         style={{
           height: "140px",
           width: "100%",
-          border: "1px solid blue",
+          // border: "1px solid blue",
           // marginBottom: "5%",
         }}
       ></div>

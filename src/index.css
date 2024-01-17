@@ -17,3 +17,10 @@ code {
   padding: 0;
   margin: 0;
 }
+
+.MuiSlider-thumb:not(.MuiSlider-active) {
+  transition: left 0.2s ease-in;
+}
+.MuiSlider-track {
+  transition: width 2s ease-in;
+}

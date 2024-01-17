@@ -155,6 +155,7 @@ export default function App() {
               <div className="notificationListItemDot"></div>
             </div>
             <div className="notificationListItemInfoContainer">
+              {/* <div className="notificationListItemInfoPlaceholder"></div> */}
               <div className="notificationListItemInfoSubjectContainer">
                 <div className="notificationListItemInfoSubject">
                   Here comes the subject of the mail body
