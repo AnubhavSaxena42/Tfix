@@ -1,0 +1,37 @@
+.optionBox {
+  cursor: pointer;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  border: 1px solid #5560b8;
+  align-items: center;
+  color: rgb(183, 183, 183);
+  font-family: "Jura";
+  font-size: 20px;
+  padding-bottom: 10px;
+}
+
+.counter {
+  font-size: 44px;
+  font-family: "Jura";
+}
+
+.firstLetter {
+  font-size: 24px;
+  margin-left: 10px;
+}
+
+.otherLetters {
+  font-size: 18px;
+}
+
+.dateValue {
+  font-size: 12px;
+}
+
+.counterContainer {
+  /* background-color: red; */
+  position: absolute;
+  bottom: 50px;
+}

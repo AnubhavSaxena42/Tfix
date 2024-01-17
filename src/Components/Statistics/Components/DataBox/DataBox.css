@@ -1,0 +1,35 @@
+.dataBoxContainer {
+  position: absolute;
+  /* background-color: red; */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  border: 1px solid rgb(255, 158, 158);
+  align-items: center;
+  font-family: "Jura";
+  font-size: 20px;
+}
+
+.counterDataBox {
+  font-size: 44px;
+}
+
+.firstLetter {
+  font-size: 24px;
+  margin-left: 10px;
+}
+
+.otherLetters {
+  font-size: 18px;
+}
+
+.dateValue {
+  font-size: 12px;
+}
+
+.counterDataBoxContainer {
+  /* background-color: red; */
+  position: absolute;
+
+  bottom: 20px;
+}

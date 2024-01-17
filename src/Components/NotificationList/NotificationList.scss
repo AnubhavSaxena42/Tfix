@@ -1,0 +1,228 @@
+.notificationListContainer {
+  height: 20%;
+  min-height: 300px;
+  width: 100%;
+  font-family: Jura;
+  overflow: scroll;
+  font-size: 16px;
+}
+
+.notificationListItemPointerContainer {
+  height: 100%;
+  width: 8%;
+  // backgroundColor: "green",
+  border: 1px solid pink;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.notificationListItemPointer {
+  height: 4%;
+  width: 90%;
+  max-width: 50px;
+  background-color: white;
+  border-radius: 12px;
+}
+
+.notificationListItemTimeContainer {
+  height: 100%;
+  width: 10%;
+  padding: 0% 1%;
+  // backgroundColor: "green",
+  border: 1px solid pink;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.notificationListItemDot {
+  height: 8px;
+  width: 8px;
+  background-color: white;
+  border-radius: 100%;
+}
+
+.notificationListItemFirstDotContainer {
+  height: 100%;
+  width: 5%;
+  padding: 0% 1%;
+  // backgroundColor: "green",
+  border: 1px solid pink;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.notificationListItemInfoContainer {
+  flex: 1;
+  // backgroundColor: "green",
+  border: 1px solid pink;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+  // whiteSpace: "nowrap",
+  overflow: hidden;
+  text-overflow: ellipses;
+}
+
+.notificationListItemInfoSubjectContainer {
+}
+
+.notificationListItemInfoSubject {
+  margin-bottom: 2%;
+  //Change this value for font size
+  // font-size: 18px;
+}
+
+.notificationListItemInfoAttachmentsContainer {
+  display: flex;
+  height: 5%;
+  // backgroundColor: "blue",
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 0 20%;
+}
+
+.notificationListItemInfoAttachmentsSeperator {
+  width: 20px;
+  height: 100%;
+  border-radius: 20px;
+  background-color: white;
+}
+
+.notificationListItemInfoAttachment {
+}
+
+.notificationListItemCompanyContainer {
+  height: 100%;
+  width: 10%;
+  padding: 0% 1%;
+  // backgroundColor: "green",
+  border: 1px solid pink;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-decoration: underline;
+}
+
+.notificationListItemStatusContainer {
+  height: 100%;
+  width: 20%;
+  padding: 0% 1%;
+  // backgroundColor: "green",
+  border: 1px solid pink;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.myListItem {
+  display: flex;
+  flex-direction: row;
+  /* justify-content:center; */
+  height: 80px;
+  width: 100%;
+  /* background-color: red; */
+  border-bottom: 0.2px solid white;
+  /* max-width: 1200px; */
+  cursor: pointer;
+  &:hover {
+    transition: all 0.3s;
+    background: #0f0f0f;
+  }
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: stretch;
+  gap: 1px;
+  margin: 1px 0;
+}
+
+button {
+  min-width: 45%;
+  flex: 1;
+  outline: none;
+  font-size: 12px;
+  border: 0;
+  font-family: "Jura";
+  border-radius: 0.2vw;
+  background: #272727;
+  color: #aaa;
+  line-height: 3rem;
+  padding: 2px 2px;
+  cursor: pointer;
+  transition: all 0.2s;
+  &:hover {
+    transition: all 0s;
+    background: #ffffff22;
+  }
+  &:active {
+    background: #ffffff55;
+  }
+  &.add {
+    color: white;
+    background: black;
+    &:hover {
+      background: #0f0f0f;
+    }
+    &:active {
+      background: #0f0f0f;
+    }
+  }
+  &.remove {
+    color: #ff6347;
+    background: #ff634716;
+    &:hover {
+      background: #ff634722;
+    }
+    &:active {
+      background: #ff634755;
+    }
+  }
+}
+
+.bar {
+  scrollbar-face-color: #646464;
+  scrollbar-base-color: #646464;
+  scrollbar-3dlight-color: #646464;
+  scrollbar-highlight-color: #646464;
+  scrollbar-track-color: #000;
+  scrollbar-arrow-color: #000;
+  scrollbar-shadow-color: #646464;
+  scrollbar-dark-shadow-color: #646464;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 3px;
+}
+// ::-webkit-scrollbar-button {
+//   background-color: #666;
+// }
+::-webkit-scrollbar-track {
+  background-color: #646464;
+}
+::-webkit-scrollbar-track-piece {
+  background-color: #000;
+}
+::-webkit-scrollbar-thumb {
+  height: 50px;
+  max-height: 20px;
+  background-color: #666;
+  border-radius: 20px;
+}
+::-webkit-scrollbar-corner {
+  background-color: black;
+}
+::-webkit-resizer {
+  background-color: #666;
+}

@@ -1,5 +1,13 @@
+@import url("https://fonts.googleapis.com/css2?family=Jura&display=swap");
+
 .App {
-  text-align: center;
+  height: 100vh;
+  width: 100vw;
+  background-color: black;
+  overflow: hidden;
+  padding: 3% 10%;
+  display: flex;
+  flex-direction: column;
 }
 
 .App-logo {
