@@ -258,11 +258,15 @@ function OptionBox({
       <SlotCounter
         containerClassName="counterContainer"
         charClassName="counter"
-        sequentialAnimationMode
         initialValue="00"
+        // useMonospaceWidth={true}
+        startValueOnce
+        duration={1}
+        animateUnchanged={false}
         value={counterValue}
-        animateOnVisible
+        // animateOnVisible
       />
+
       <div
         style={{
           fontSize: "35px",

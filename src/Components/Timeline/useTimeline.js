@@ -3,15 +3,17 @@ import { useEffect, useRef, useState } from "react";
 import { DATES, RANGE_OPTIONS } from "./constants";
 import gsap, { Power3 } from "gsap";
 
-export const useTimeline = () => {
+export const useTimeline = ({
+  dateMap,
+  setMapLoading,
+  selectedRange,
+  setSelectedRange,
+  mapLoading,
+  selectedDate,
+  setSelectedDate,
+}) => {
   const INITIAL_DELAY = 1.5;
-  const [dateMap, setDateMap] = useState(false);
-  const [selectedRange, setSelectedRange] = useState(false);
-
-  const [viewingRange, setViewingRange] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(dayjs());
   const [scrollMonthDate, setScrollMonthDate] = useState(dayjs().startOf("M"));
-  const [mapLoading, setMapLoading] = useState(true);
   const [screenSize, setScreenSize] = useState(getCurrentDimension());
 
   let listref = useRef(null);
@@ -91,7 +93,7 @@ export const useTimeline = () => {
 
   const onPressSpike = (spike) => {
     // const newScrollMonthDate = findIndexByDate(spike?.date?.startOf("month"));
-
+    console.log("SpikeSelection:", spike);
     const newScrollMonthDate = findIndexByDate(spike?.startOf("month"));
     console.log("checkthis", {
       spike,
@@ -125,33 +127,33 @@ export const useTimeline = () => {
     );
   };
 
-  const constructDateMap = () => {
-    setMapLoading(true);
-    const newDateMap = new Map();
-    let startDate = DATES.FIRST_DATE.clone();
-    const lastDate = DATES.LAST_DATE.clone();
+  // const constructDateMap = () => {
+  //   setMapLoading(true);
+  //   const newDateMap = new Map();
+  //   let startDate = DATES.FIRST_DATE.clone();
+  //   const lastDate = DATES.LAST_DATE.clone();
 
-    while (startDate.isBefore(lastDate) || startDate.isSame(lastDate)) {
-      let dataObject = false;
-      if (Math.abs(dayjs().diff(startDate, "day")) <= 90) {
-        dataObject = {
-          numberOfRequests: getRandomInt(4, 34),
-          data: [
-            { id: 1, status: "Pending" },
-            { id: 2, status: "Processed" },
-          ],
-          date: startDate,
-        };
+  //   while (startDate.isBefore(lastDate) || startDate.isSame(lastDate)) {
+  //     let dataObject = false;
+  //     if (Math.abs(dayjs().diff(startDate, "day")) <= 90) {
+  //       dataObject = {
+  //         numberOfRequests: getRandomInt(4, 34),
+  //         data: [
+  //           { id: 1, status: "Pending" },
+  //           { id: 2, status: "Processed" },
+  //         ],
+  //         date: startDate,
+  //       };
 
-        newDateMap.set(startDate.format("YYYY-MM-DD"), dataObject);
-      }
-      startDate = startDate.add(1, "day");
-    }
-    console.log("Final Map:", newDateMap?.size);
-    setDateMap(newDateMap);
+  //       newDateMap.set(startDate.format("YYYY-MM-DD"), dataObject);
+  //     }
+  //     startDate = startDate.add(1, "day");
+  //   }
+  //   console.log("Final Map:", newDateMap?.size);
+  //   setDateMap(newDateMap);
 
-    setMapLoading(false);
-  };
+  //   setMapLoading(false);
+  // };
 
   useEffect(() => {
     const updateDimension = () => {
@@ -164,13 +166,15 @@ export const useTimeline = () => {
     };
   }, [screenSize]);
 
-  useEffect(() => {
-    constructDateMap();
-  }, []);
+  // useEffect(() => {
+  //   constructDateMap();
+  // }, []);
 
   useEffect(() => {
+    console.log("ListscrollingDebug:useEffect Ran", mapLoading);
     if (!mapLoading) scrollToTodaysMonth();
     else {
+      console.log("ListScrollDebug:Effect ran for current month");
       gsap.fromTo(
         timelineRef.current,
         {
@@ -190,16 +194,16 @@ export const useTimeline = () => {
 
   return {
     scrollToTodaysMonth,
-    dateMap,
+    // dateMap,
     mapLoading,
-    setMapLoading,
+    // setMapLoading,
     findIndexByDate,
     findDataByIndex,
     listref,
     scrollToNextMonth,
     scrollToPrevMonth,
     scrollMonthDate,
-    setDateMap,
+    // setDateMap,
     timelineRef,
     getListWidth,
     getObjectAtSpike,
@@ -208,6 +212,5 @@ export const useTimeline = () => {
     getRandomInt,
     onPressSpike,
     selectRange,
-    viewingRange,
   };
 };

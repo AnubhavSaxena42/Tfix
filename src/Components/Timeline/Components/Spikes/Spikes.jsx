@@ -2,6 +2,7 @@ import gsap from "gsap";
 import { Power3 } from "gsap";
 import React, { useEffect, useRef, useState } from "react";
 import "./Spikes.css";
+import { generateData } from "../../../../core/helpers/helpers";
 
 const Spikes = ({
   item,
@@ -18,15 +19,11 @@ const Spikes = ({
   const spikeRef = useRef(null);
   const spikeContainerRef = useRef(null);
   const dayNumberRef = useRef(null);
-
+  console.log("object at spike:", objectAtSpike);
   const loadSpike = () => {
     setTimeout(() => {
       const dataObject = {
-        numberOfRequests: getRandomInt(0, 8),
-        data: [
-          { id: 1, status: "Pending" },
-          { id: 2, status: "Processed" },
-        ],
+        data: generateData(),
         date: item,
       };
       console.log("callback called:Debounce this");
@@ -84,8 +81,7 @@ const Spikes = ({
       gsap.to(requestsHolderRef.current, {
         y: -10,
         duration: 0.2,
-        backgroundColor:
-          objectAtSpike?.numberOfRequests > 0 ? "#fbf2a4" : "none",
+        backgroundColor: objectAtSpike?.data?.length > 0 ? "#fbf2a4" : "none",
         color: "black",
       });
       gsap.to(dayNumberRef.current, { y: 10, duration: 0.2 });
@@ -214,9 +210,9 @@ const Spikes = ({
           : "spikeContainer"
       }
     >
-      {objectAtSpike?.numberOfRequests > 0 ? (
+      {objectAtSpike?.data?.length > 0 ? (
         <div ref={requestsHolderRef} className="requestsHolder">
-          {objectAtSpike?.numberOfRequests}
+          {objectAtSpike?.data?.length}
         </div>
       ) : (
         <div ref={requestsHolderRef} className="requestsHolder noBorder">

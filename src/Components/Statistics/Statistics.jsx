@@ -3,7 +3,26 @@ import React, { useEffect, useRef, useState } from "react";
 import OptionBox from "./Components/OptionBox/OptionBox";
 import DataBox from "./Components/DataBox/DataBox";
 
-function Statistics() {
+function Statistics({
+  dateMap,
+  setDateMap,
+  setMapLoading,
+  mapLoading,
+  selectedRange,
+  setSelectedRange,
+  selectedDate,
+  setSelectedDate,
+}) {
+  console.log("InStatsComp:", {
+    dateMap,
+    setDateMap,
+    setMapLoading,
+    mapLoading,
+    selectedRange,
+    setSelectedRange,
+    selectedDate,
+    setSelectedDate,
+  });
   const INITIAL_DELAY = 2.3;
   const statsRef = useRef(null);
   const redPath = useRef(null);
@@ -976,10 +995,17 @@ function Statistics() {
           boxRef={todayBox}
           onClick={AnimateSelectToday}
           position={divPosition}
-          topOffset={15}
+          topOffset={50}
           leftOffset={21}
-          optionalStyles={{ width: "50px", height: "1px" }}
-          counterValue={"00"}
+          duration={2}
+          optionalStyles={{ width: "50px", height: "50px" }}
+          counterValue={
+            mapLoading
+              ? "00"
+              : String(
+                  dateMap.get(selectedDate?.format("YYYY-MM-DD"))?.data?.length
+                ).padStart(2, "0")
+          }
           header={"Today"}
           dateValue={"1/16/24"}
         />
