@@ -1,0 +1,47 @@
+.spikeContainer {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 10px;
+  font-family: "Jura";
+  margin-top: 10px;
+}
+
+.requestsHolder {
+  height: 16px;
+  width: 16px;
+  border: 1px solid white;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  font-size: 9px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.requestsHolder.noBorder {
+  border: 0px;
+}
+
+.spike {
+  height: 30px;
+
+  /* height: 15px; */
+  width: 3px;
+  border-radius: 1.5px;
+  background-color: white;
+  margin-bottom: 10px;
+}
+
+.hoverspike {
+  background-color: rgb(37, 98, 255);
+  transform: scaleY(1.2);
+}
+/* .spike:hover {
+    transform: scaleY(1.2);
+  } */
+.dayNumber {
+  font-size: 10px;
+  color: rgb(120, 120, 120);
+}

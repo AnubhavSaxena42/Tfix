@@ -1,75 +1,40 @@
-.timelineContainer {
-  margin-top: 20px;
-  padding: 0px 10px;
-  height: 300px;
-  width: 100vw;
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-}
-
-.timeline {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  flex-wrap: nowrap;
-  overflow: visible;
-}
-
-.spikeContainer {
+.monthScrollCursors {
   cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-right: 10px;
-  font-family: "Jura";
-  margin-top: 10px;
 }
 
-.requestsHolder {
-  height: 16px;
-  width: 16px;
-  border: 1px solid white;
-  color: white;
-  border-radius: 50%;
+.timelineContainer {
+  opacity: 1;
+  height: 180px;
+  min-height: 120px;
+  padding-top: 10px;
+
+  /* padding-top: 30px; */
+  border: 1px solid tomato;
+  width: 100%;
+  overflow: hidden;
   display: flex;
-  font-size: 9px;
+  align-items: center;
   justify-content: center;
+}
+
+.timelineList {
+  overflow: hidden;
+  scroll-behavior: smooth;
+}
+
+.monthScrollerContainer {
+  color: white;
+  flex: 1;
   align-items: center;
+  /* // backgroundColor: "orangered" */
+  font-size: 20px;
+  display: flex;
+  border: 1px solid orangered;
   margin-bottom: 10px;
-}
-.requestsHolder.noBorder {
-  border: 0px;
-}
-
-.spike {
-  height: 30px;
-  width: 3px;
-  border-radius: 1.5px;
-  background-color: white;
-  margin-bottom: 10px;
-}
-
-/* .spikeContainer:hover {
-  transform: scaleY(1.2);
-}
-.hoverspikeContainer {
-  transform: scaleY(1.2);
-} */
-.hoverspike {
-  background-color: rgb(37, 98, 255);
-  transform: scaleY(1.2);
-}
-/* .spike:hover {
-  transform: scaleY(1.2);
-} */
-.dayNumber {
-  font-size: 10px;
-  color: rgb(120, 120, 120);
 }
 
 .monthScrollerText {
+  font-size: 14px;
   margin-bottom: 0.5px;
   font-family: "Jura";
 }
