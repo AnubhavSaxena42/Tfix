@@ -16,37 +16,27 @@
   font-size: 44px;
   font-family: "Jura";
   border: 1px solid blueviolet;
-  /* height: 50px; */
-  /* width: 50px; */
-  /* display: flex; */
-  /* flex-direction: row; */
-  /* justify-content: center; */
-  /* align-items: center; */
 }
 .counterValueText {
-  font-size: 44px;
-  position: absolute;
-  /* bottom: 40px; */
-  bottom: 55px;
+  border: 1px solid seagreen;
 }
 
 .firstLetter {
   font-size: 24px;
-  margin-left: 10px;
 }
-
+.firstLetterMargin {
+  margin-left: 5px;
+}
 .otherLetters {
   font-size: 18px;
 }
 
 .dateValue {
   font-size: 12px;
+  border: 1px solid sienna;
 }
 
 .counterContainer {
-  /* background-color: red; */
-  /* height: 50px; */
-  /* width: 50px; */
   border: 1px solid salmon;
   position: absolute;
   bottom: 50px;

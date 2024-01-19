@@ -19,6 +19,9 @@ function OptionBox({
   label,
   optionalStyles,
   counterValue,
+  selectedRange,
+  setSelectedRange,
+  boxRange,
 }) {
   const boxRef = useRef(null);
   const valueRef = useRef(null);
@@ -69,12 +72,12 @@ function OptionBox({
       fontSize: "12px",
     });
 
-    // gsap.to(boxRef.current.querySelectorAll(".counter"), {
-    //   fontSize: "44px",
-    // });
-    gsap.to(boxRef.current.querySelectorAll(".counterContainer"), {
-      bottom: "30px",
+    gsap.to(valueRef.current, {
+      fontSize: "44px",
     });
+    // gsap.to(boxRef.current.querySelectorAll(".counterContainer"), {
+    //   bottom: "30px",
+    // });
   };
   const transitionToSmallWindowState = () => {
     // return;
@@ -90,12 +93,12 @@ function OptionBox({
       fontSize: "8px",
     });
 
-    // gsap.to(boxRef.current.querySelectorAll(".counter"), {
-    //   fontSize: "24px",
-    // });
-    gsap.to(boxRef.current.querySelectorAll(".counterContainer"), {
-      bottom: "30px",
+    gsap.to(valueRef.current, {
+      fontSize: "24px",
     });
+    // gsap.to(boxRef.current.querySelectorAll(".counterContainer"), {
+    //   bottom: "30px",
+    // });
   };
   useEffect(() => {
     window.addEventListener("resize", updateDimension);
@@ -104,6 +107,22 @@ function OptionBox({
       window.removeEventListener("resize", updateDimension);
     };
   }, [windowSize]);
+
+  useEffect(() => {
+    if (selectedRange === boxRange) {
+      gsap.to(boxRef.current, {
+        color: "white",
+        duration: 1,
+        ease: "power3.inOut",
+      });
+    } else {
+      gsap.to(boxRef.current, {
+        color: "rgb(183, 183, 183)",
+        duration: 1,
+        ease: "power3.inOut",
+      });
+    }
+  }, [selectedRange, boxRange]);
 
   const formatString = useCallback(
     (inputString) => {
@@ -115,7 +134,13 @@ function OptionBox({
 
         return (
           <span key={index}>
-            <span className="firstLetter">{firstLetter}</span>
+            <span
+              className={
+                index === 0 ? "firstLetter" : "firstLetter firstLetterMargin"
+              }
+            >
+              {firstLetter}
+            </span>
             <span className="otherLetters">{otherLetters}</span>
           </span>
         );
@@ -201,8 +226,7 @@ function OptionBox({
 
   const onClickBox = () => {
     // return;
-    selected && onUnselectBox(1);
-    !selected && onSelectBox(1);
+    setSelectedRange(boxRange);
     onClick();
   };
 
@@ -232,7 +256,7 @@ function OptionBox({
 
   const onMouseLeaveBox = (box) => {
     console.log("in leave cb", selected, header);
-    if (!selected) {
+    if (selectedRange !== boxRange) {
       gsap.to(box, {
         color: "rgb(183,183,183)",
         duration: 0.1,
@@ -300,25 +324,28 @@ function OptionBox({
       <div
         ref={valueRef}
         className="counterValueText"
-        style={{
-          // fontSize: "24px",
-          fontSize: "44px",
-          position: "absolute",
-          // bottom: "40px",
-          bottom: "55px",
-        }}
+        style={
+          {
+            // fontSize: "24px",
+            // fontSize: "44px",
+            // position: "absolute",
+            // bottom: "40px",
+            // bottom: "55px",
+          }
+        }
       >
         {counterValue}
       </div>
-      <div
+      {/* <div
         style={{
-          fontSize: "35px",
+          // fontSize: "35px",
           letterSpacing: "-1px",
-          fontFamily: "Jura",
+          // fontFamily: "Jura",
+          border: "1px solid blue",
         }}
-      >
-        {formatString(header)}
-      </div>
+      > */}
+      {formatString(header)}
+      {/* </div> */}
       <div ref={labelRef} className="dateValue">
         {label}
       </div>

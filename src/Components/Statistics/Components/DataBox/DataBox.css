@@ -1,6 +1,5 @@
 .dataBoxContainer {
   position: absolute;
-  /* background-color: red; */
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -16,7 +15,6 @@
 
 .firstLetter {
   font-size: 24px;
-  margin-left: 10px;
 }
 
 .otherLetters {
@@ -28,8 +26,6 @@
 }
 
 .counterDataBoxContainer {
-  /* background-color: red; */
   position: absolute;
-
   bottom: 20px;
 }

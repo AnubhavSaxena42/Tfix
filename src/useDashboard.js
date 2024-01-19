@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import { DATES } from "./Components/Timeline/constants";
 import dayjs from "dayjs";
 import { generateData, getRandomInt } from "./core/helpers/helpers";
+import { SELECTABLE_RANGES } from "./core/constants/constants";
 
 export const useDashboard = () => {
   const [dateMap, setDateMap] = useState(false);
   const [mapLoading, setMapLoading] = useState(true);
-  const [selectedRange, setSelectedRange] = useState(false);
+  const [selectedRange, setSelectedRange] = useState(SELECTABLE_RANGES.TODAY);
   const [selectedDate, setSelectedDate] = useState(dayjs());
 
   const constructDateMap = () => {

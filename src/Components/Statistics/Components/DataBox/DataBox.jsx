@@ -14,6 +14,7 @@ function DataBox({
   optionalStyles,
 }) {
   const dataBox = useRef(null);
+  const valueRef = useRef(null);
   const [windowSize, setWindowSize] = useState("Big");
   function getCurrentDimension() {
     return {
@@ -50,7 +51,13 @@ function DataBox({
 
         return (
           <span key={index}>
-            <span className="firstLetter">{firstLetter}</span>
+            <span
+              className={
+                index === 0 ? "firstLetter" : "firstLetter firstLetterMargin"
+              }
+            >
+              {firstLetter}
+            </span>
             <span className="otherLetters">{otherLetters}</span>
           </span>
         );
@@ -70,11 +77,8 @@ function DataBox({
       fontSize: "24px",
     });
 
-    gsap.to(dataBox.current.querySelectorAll(".counterDataBox"), {
+    gsap.to(valueRef.current, {
       fontSize: "44px",
-    });
-    gsap.to(dataBox.current.querySelectorAll(".counterDataBoxContainer"), {
-      bottom: "20px",
     });
   };
 
@@ -90,13 +94,10 @@ function DataBox({
       translateY: 6,
     });
 
-    gsap.to(dataBox.current.querySelectorAll(".counterDataBox"), {
+    gsap.to(valueRef.current, {
       fontSize: "24px",
     });
-    gsap.to(dataBox.current.querySelectorAll(".counterDataBoxContainer"), {
-      bottom: "14px",
-      //   opacity: 0,
-    });
+    //   opacity: 0,
   };
 
   useEffect(() => {
@@ -136,6 +137,27 @@ function DataBox({
     );
   };
 
+  const updateTextAnimation = () => {
+    const vRef = valueRef.current;
+    gsap.fromTo(
+      vRef,
+      {
+        y: -40,
+        opacity: 0,
+      },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 1,
+        ease: "power1.out",
+      }
+    );
+  };
+
+  useEffect(() => {
+    updateTextAnimation();
+  }, [counterValue]);
+
   return (
     <div
       // onClick={AnimateSelectToday}
@@ -148,15 +170,30 @@ function DataBox({
       }}
       className={`dataBoxContainer`}
     >
-      <SlotCounter
+      {/* <SlotCounter
         containerClassName="counterDataBoxContainer"
         charClassName="counterDataBox"
         sequentialAnimationMode
         initialValue="00"
         value={counterValue}
         animateOnVisible
-      />
-      <div className="displayValueCounterBox">{formatString(displayValue)}</div>
+      /> */}
+      <div
+        ref={valueRef}
+        className="counterValueText"
+        style={
+          {
+            // fontSize: "24px",
+            // fontSize: "44px",
+            // position: "absolute",
+            // bottom: "40px",
+            // bottom: "55px",
+          }
+        }
+      >
+        {counterValue}
+      </div>
+      {formatString(displayValue)}
     </div>
   );
 }

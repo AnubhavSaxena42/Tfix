@@ -1,9 +1,13 @@
 import gsap, { Power2, Power3 } from "gsap";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import OptionBox from "./Components/OptionBox/OptionBox";
 import DataBox from "./Components/DataBox/DataBox";
 import dayjs from "dayjs";
 import { generateData } from "../../core/helpers/helpers";
+import {
+  REQUEST_STATUS,
+  SELECTABLE_RANGES,
+} from "../../core/constants/constants";
 
 function Statistics({
   dateMap,
@@ -918,11 +922,12 @@ function Statistics({
       resizeObserver.disconnect();
     };
   }, []);
-  function calculateThisMonthCounterValue(date) {
+  const calculateThisMonthCounterValue = useMemo(() => {
     //Edge Case here explain
+    if (mapLoading) return;
     console.log("CounterDebug:Function enter", selectedDate);
-    const startOfMonth = dayjs(date).startOf("month");
-    const endOfMonth = dayjs(date).endOf("month");
+    const startOfMonth = dayjs(selectedDate).startOf("month");
+    const endOfMonth = dayjs(selectedDate).endOf("month");
     console.log(
       "CounterDebug:Function enter",
       selectedDate,
@@ -951,13 +956,14 @@ function Statistics({
       currentDate = currentDate.add(1, "day");
     }
     return counterValue;
-  }
+  }, [selectedDate.format("YYYY/MM/DD"), dateMap, mapLoading]);
 
-  function calculateThisWeekCounterValue(date) {
+  const calculateThisWeekCounterValue = useMemo(() => {
     //Edge Case here explain
+    if (mapLoading) return;
     console.log("CounterDebug:Function enter", selectedDate);
-    const startOfWeek = dayjs(date).startOf("week");
-    const endOfWeek = dayjs(date).endOf("week");
+    const startOfWeek = dayjs(selectedDate).startOf("week");
+    const endOfWeek = dayjs(selectedDate).endOf("week");
     console.log(
       "CounterDebug:Function enter",
       selectedDate,
@@ -986,25 +992,110 @@ function Statistics({
       currentDate = currentDate.add(1, "day");
     }
     return counterValue;
-  }
+  }, [selectedDate.format("YYYY/MM/DD"), dateMap, mapLoading]);
 
-  function calculateThisWeekLabel(date) {
+  const calculateRequestsData = useMemo(
+    (filters) => {
+      if (mapLoading) return;
+
+      //Edge Case here explain
+
+      const startOfWeek = dayjs(selectedDate).startOf(
+        selectedRange === SELECTABLE_RANGES.TODAY
+          ? "day"
+          : selectedRange === SELECTABLE_RANGES.THIS_WEEK
+          ? "week"
+          : "month"
+      );
+      const endOfWeek = dayjs(selectedDate).endOf(
+        selectedRange === SELECTABLE_RANGES.TODAY
+          ? "day"
+          : selectedRange === SELECTABLE_RANGES.THIS_WEEK
+          ? "week"
+          : "month"
+      );
+      console.log(
+        "CounterDebug:Function enter",
+        selectedDate,
+        startOfWeek,
+        endOfWeek
+      );
+
+      let currentDate = startOfWeek.clone();
+      let counterValueDataArray = [];
+
+      while (currentDate.isSame(endOfWeek) || currentDate.isBefore(endOfWeek)) {
+        console.log("CounterDebug:In loop for date", currentDate);
+        if (dateMap.get(currentDate?.format("YYYY-MM-DD"))) {
+          counterValueDataArray.push(
+            dateMap.get(currentDate?.format("YYYY-MM-DD"))?.data
+          );
+        } else {
+          //Mock API hit
+          const dataObject = {
+            data: generateData(),
+            date: currentDate,
+          };
+          counterValueDataArray.push(dataObject?.data);
+          dateMap.set(currentDate.format("YYYY-MM-DD"), dataObject);
+        }
+        currentDate = currentDate.add(1, "day");
+      }
+      let counterValue = counterValueDataArray.reduce(
+        (accumulator, current) => {
+          for (let i = 0; i < current.length; i++) {
+            if (current[i]?.status === REQUEST_STATUS.PROCESSED) {
+              accumulator = {
+                ...accumulator,
+                numOfProcessedRequests: accumulator.numOfProcessedRequests + 1,
+                processedData: [...accumulator.processedData, current[i]],
+              };
+            } else {
+              accumulator = {
+                ...accumulator,
+                numOfPendingRequests: accumulator.numOfPendingRequests + 1,
+                pendingData: [...accumulator.pendingData, current[i]],
+              };
+            }
+          }
+          return accumulator;
+        },
+        {
+          // selectedDate: selectedDate.format("YYYY/MM/DD"),
+          numOfPendingRequests: 0,
+          numOfProcessedRequests: 0,
+          pendingData: [],
+          processedData: [],
+        }
+      );
+      console.log("CounterDebug:Final", {
+        counterValueDataArray,
+        counterValue,
+      });
+      return counterValue;
+    },
+    [selectedDate.format("YYYY/MM/DD"), dateMap, mapLoading, selectedRange]
+  );
+
+  const calculateThisWeekLabel = useMemo(() => {
     //Edge Case here explain
+    if (mapLoading) return;
     console.log("CounterDebug:Function enter", selectedDate);
-    const startOfWeek = dayjs(date).startOf("week");
-    const endOfWeek = dayjs(date).endOf("week");
+    const startOfWeek = dayjs(selectedDate).startOf("week");
+    const endOfWeek = dayjs(selectedDate).endOf("week");
 
     return `${startOfWeek.format("MM/DD")}-${endOfWeek.format("MM/DD")}`;
-  }
+  }, [selectedDate.format("YYYY/MM/DD"), dateMap, mapLoading]);
 
-  function calculateThisMonthLabel(date) {
+  const calculateThisMonthLabel = useMemo(() => {
     //Edge Case here explain
+    if (mapLoading) return;
     console.log("CounterDebug:Function enter", selectedDate);
-    const startOfMonth = dayjs(date).startOf("month");
-    const endOfMonth = dayjs(date).endOf("month");
+    const startOfMonth = dayjs(selectedDate).startOf("month");
+    const endOfMonth = dayjs(selectedDate).endOf("month");
 
     return `${startOfMonth.format("MM/DD")}-${endOfMonth.format("MM/DD")}`;
-  }
+  }, [selectedDate.format("YYYY/MM/DD"), dateMap, mapLoading]);
 
   return (
     <div
@@ -1025,7 +1116,7 @@ function Statistics({
     >
       {/* Filters */}
       <div
-        onClick={() => calculateThisMonthCounterValue(selectedDate)}
+        // onClick={() => calculateRequestsData(selectedDate)}
         style={{
           height: "90px",
           width: "100%",
@@ -1053,9 +1144,15 @@ function Statistics({
         }}
       >
         <DataBox
-          position={pendingPosition}
+          position={processedPosition}
           displayValue={"Processed"}
-          counterValue={"10"}
+          counterValue={
+            mapLoading
+              ? "00"
+              : calculateRequestsData.numOfProcessedRequests
+                  ?.toString()
+                  .padStart(2, "0")
+          }
           optionalStyles={{
             color: "rgb(161,182,255)",
             width: "10px",
@@ -1071,7 +1168,13 @@ function Statistics({
         <DataBox
           position={pendingPosition}
           displayValue={"Pending"}
-          counterValue={"13"}
+          counterValue={
+            mapLoading
+              ? "00"
+              : calculateRequestsData.numOfPendingRequests
+                  ?.toString()
+                  .padStart(2, "0")
+          }
           optionalStyles={{
             color: "rgb(255,158,158)",
             width: "10px",
@@ -1088,6 +1191,9 @@ function Statistics({
           initialDelay={INITIAL_DELAY}
           boxRef={todayBox}
           onClick={AnimateSelectToday}
+          boxRange={SELECTABLE_RANGES.TODAY}
+          selectedRange={selectedRange}
+          setSelectedRange={setSelectedRange}
           position={divPosition}
           topOffset={15}
           leftOffset={47}
@@ -1108,6 +1214,9 @@ function Statistics({
         <OptionBox
           initialDelay={INITIAL_DELAY}
           boxRef={thisWeekBox}
+          selectedRange={selectedRange}
+          setSelectedRange={setSelectedRange}
+          boxRange={SELECTABLE_RANGES.THIS_WEEK}
           onClick={AnimateSelectThisWeek}
           position={thisWeekPosition}
           topOffset={15}
@@ -1119,17 +1228,18 @@ function Statistics({
           counterValue={
             mapLoading
               ? "00"
-              : calculateThisWeekCounterValue(selectedDate)
-                  .toString()
-                  .padStart(2, "0")
+              : calculateThisWeekCounterValue.toString().padStart(2, "0")
           }
           header={"This Week"}
           dateValue={"1/1-1/7"}
-          label={calculateThisWeekLabel(selectedDate)}
+          label={calculateThisWeekLabel}
         />
         <OptionBox
           initialDelay={INITIAL_DELAY}
           boxRef={thisMonthBox}
+          selectedRange={selectedRange}
+          setSelectedRange={setSelectedRange}
+          boxRange={SELECTABLE_RANGES.THIS_MONTH}
           onClick={AnimateSelectThisMonth}
           position={thisMonthPosition}
           topOffset={15}
@@ -1138,12 +1248,10 @@ function Statistics({
           counterValue={
             mapLoading
               ? "00"
-              : calculateThisMonthCounterValue(selectedDate)
-                  .toString()
-                  .padStart(2, "0")
+              : calculateThisMonthCounterValue.toString().padStart(2, "0")
           }
           header={"This Month"}
-          label={calculateThisMonthLabel(selectedDate)}
+          label={calculateThisMonthLabel}
           // selectedDate={selectedDate}
           dateValue={"1/1-1/31"}
         />
