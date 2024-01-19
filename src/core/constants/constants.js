@@ -3,7 +3,18 @@ export const REQUEST_STATUS = {
   PROCESSED: "PROCESSED",
 };
 
-export const COMPANIES = ["ABS", "TCS", "XYZ", "JFK", "Y2K"];
+export const COMPANIES = [
+  "ABS",
+  "TCS",
+  "XYZ",
+  "JFK",
+  "Y2K",
+  "XXX",
+  "DFG",
+  "MLM",
+  "PQR",
+  "TRP",
+];
 
 export const ATTACHMENT_TYPES = ["pdf", "gaeb"];
 

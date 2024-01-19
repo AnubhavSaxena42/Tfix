@@ -4,7 +4,11 @@ import OptionBox from "./Components/OptionBox/OptionBox";
 import DataBox from "./Components/DataBox/DataBox";
 import dayjs from "dayjs";
 import { generateData } from "../../core/helpers/helpers";
+import { FaCheck, FaPlus } from "react-icons/fa";
+import { ImCross } from "react-icons/im";
 import {
+  ATTACHMENT_TYPES,
+  COMPANIES,
   REQUEST_STATUS,
   SELECTABLE_RANGES,
 } from "../../core/constants/constants";
@@ -75,8 +79,117 @@ function Statistics({
     top: 0,
     left: 0,
   });
-  const [monthLoading, setMonthLoading] = useState(false);
+  //Filter Component Logic and animations start
+  const [filters, setFilters] = useState({
+    types: [],
+    companies: [],
+  });
+  const [modalFilters, setModalFilters] = useState({
+    types: [],
+    companies: [],
+  });
 
+  const filterModalRef = useRef(null);
+
+  const filterTypes = {
+    COMPANY: "COMPANY",
+    ATTACHMENT: "ATTACHMENT",
+  };
+
+  const toggleFilter = ({ type, value }) => {
+    switch (type) {
+      case filterTypes.COMPANY:
+        if (modalFilters.companies.includes(value)) {
+          const newCompanies = modalFilters.companies.filter(
+            (company) => company !== value
+          );
+          setModalFilters({
+            ...modalFilters,
+            companies: newCompanies,
+          });
+          return {
+            ...modalFilters,
+            companies: newCompanies,
+          };
+        } else {
+          const newCompanies = [...modalFilters.companies, value];
+          setModalFilters({
+            ...modalFilters,
+            companies: newCompanies,
+          });
+          return {
+            ...modalFilters,
+            companies: newCompanies,
+          };
+        }
+
+      case filterTypes.ATTACHMENT:
+        if (modalFilters.types.includes(value)) {
+          const newTypes = modalFilters.types.filter((type) => type !== value);
+          setModalFilters({
+            ...modalFilters,
+            types: newTypes,
+          });
+          return {
+            ...modalFilters,
+            types: newTypes,
+          };
+        } else {
+          const newTypes = [...modalFilters.types, value];
+          setModalFilters({
+            ...modalFilters,
+            types: newTypes,
+          });
+          return {
+            ...modalFilters,
+            types: newTypes,
+          };
+        }
+
+      default:
+        return;
+    }
+  };
+
+  const confirmSelection = () => {
+    console.log("FiltersDebug:setFiltersCalled", modalFilters);
+    setFilters(modalFilters);
+  };
+
+  const removeFilterFromTag = ({ type, value }) => {
+    const newFilters = toggleFilter({ type, value });
+    setFilters(newFilters);
+  };
+
+  const filterModalEnterAnimation = () => {
+    const modal = filterModalRef.current;
+    if (modal) {
+      gsap.to(modal, {
+        visibility: "visible",
+        opacity: 1,
+        duration: 0.5,
+      });
+    }
+  };
+
+  const filterModalExitAnimation = () => {
+    console.log("FilterModalExitAnimationDebug:Start", filterModalRef.current);
+    const modal = filterModalRef.current;
+    if (modal) {
+      console.log("FilterModalExitAnimationDebug:BeforeGSAP");
+      gsap.to(modal, {
+        opacity: 0,
+        duration: 0.5,
+      });
+
+      console.log("FilterModalExitAnimationDebug:afterGSAP");
+      gsap.set(modal, {
+        visibility: "hidden",
+        delay: 0.5,
+      });
+    }
+  };
+  //Filter Component Logic and animations end
   let redProgress = 0;
   let pendingThisWeekProgress = 0;
   let pendingThisMonthProgress = 0;
@@ -1119,13 +1232,341 @@ function Statistics({
         // onClick={() => calculateRequestsData(selectedDate)}
         style={{
           height: "90px",
-          width: "100%",
+          width: "60%",
+          alignSelf: "flex-start",
           border: "1px solid yellow",
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "flex-start",
+          flexWrap: "wrap",
+          padding: "5px 5px",
           color: "white",
+          fontFamily: "Jura",
+          fontSize: "12px",
+          // paddingTop: "5px",
         }}
       >
-        click
+        <div
+          onClick={filterModalExitAnimation}
+          style={{
+            height: "20px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            marginRight: "5px",
+          }}
+        >
+          Filter by:
+        </div>
+        {filters.companies.map((company) => (
+          <div
+            key={company}
+            style={{
+              height: "20px",
+              padding: "3px",
+              margin: "0px 3px",
+              border: "1px solid #838383",
+              borderRadius: "5px",
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+              fontSize: "12px",
+            }}
+          >
+            {`comp.-${company}`}
+            <div
+              style={{
+                height: "10px",
+                width: "10px",
+                marginLeft: "2px",
+                cursor: "pointer",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: "#ff7425",
+                borderRadius: "50%",
+              }}
+            >
+              <ImCross
+                onClick={() => {
+                  removeFilterFromTag({
+                    type: filterTypes.COMPANY,
+                    value: company,
+                  });
+                }}
+                size={"5px"}
+                color="#0f0f0f"
+              />
+            </div>
+          </div>
+        ))}
+        {filters.types.map((type) => (
+          <div
+            key={type}
+            style={{
+              height: "20px",
+              padding: "3px",
+              margin: "0px 3px",
+              fontSize: "12px",
+              border: "1px solid #838383",
+              borderRadius: "5px",
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            {`type-${type}`}
+            <div
+              style={{
+                height: "10px",
+                width: "10px",
+                marginLeft: "2px",
+                cursor: "pointer",
+                backgroundColor: "#ff7425",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                borderRadius: "50%",
+              }}
+            >
+              <ImCross
+                onClick={() => {
+                  removeFilterFromTag({
+                    type: filterTypes.ATTACHMENT,
+                    value: type,
+                  });
+                }}
+                size={"5px"}
+                color="#0f0f0f"
+              />
+            </div>
+          </div>
+        ))}
+        <div
+          style={{
+            zIndex: 2,
+            marginLeft: "5px",
+            height: "20px",
+            width: "20px",
+            borderRadius: "50%",
+            backgroundColor: "#2562ff",
+            cursor: "pointer",
+            position: "relative",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          onClick={filterModalEnterAnimation}
+        >
+          <FaPlus color={"#242124"} size={10} />
+          <div
+            ref={filterModalRef}
+            style={{
+              height: "300px",
+              padding: "10px",
+              display: "flex",
+              flexDirection: "column",
+              opacity: 0,
+              visibility: "hidden",
+              cursor: "default",
+              width: "300px",
+              backgroundColor: "#242124",
+              borderRadius: "8px",
+              position: "absolute",
+              left: "25px",
+              top: "10px",
+            }}
+          >
+            <div
+              style={{
+                width: "100%",
+                height: "80%",
+                // backgroundColor: "yellow",
+                display: "flex",
+                flexDirection: "row",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  flex: 1,
+                  // border: "1px solid saddlebrown",
+                  margin: "0px 2px",
+                }}
+              >
+                <div
+                  style={{
+                    height: "30px",
+                    width: "100%",
+                    // border: "1px solid green",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    color: "white",
+                  }}
+                >
+                  Company
+                </div>
+                <div
+                  style={{
+                    flex: 1,
+                    overflow: "scroll",
+                    backgroundColor: "#0f0f0f",
+
+                    borderRadius: "8px",
+                  }}
+                >
+                  {COMPANIES.map((company) => (
+                    <div
+                      onClick={() => {
+                        toggleFilter({
+                          type: filterTypes.COMPANY,
+                          value: company,
+                        });
+                      }}
+                      key={company}
+                      style={{
+                        width: "100%",
+                        height: "30px",
+                        display: "flex",
+                        flexDirection: "row",
+                        padding: "0px 5px",
+                        justifyContent: "space-between",
+                        color: "white",
+                        cursor: "pointer",
+                        backgroundColor: "#0f0f0f",
+                        // border: "1px solid pink",
+                        borderBottom: "0.4px solid white",
+                        alignItems: "center",
+                      }}
+                    >
+                      {company}
+                      <div
+                        style={{
+                          height: "17px",
+                          width: "17px",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          borderRadius: "4px",
+                          border: "1px solid white",
+                        }}
+                      >
+                        {modalFilters.companies.includes(company) && (
+                          <FaCheck size={10} color={"white"} />
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  flex: 1,
+                  // border: "1px solid saddlebrown",
+                  margin: "0px 2px",
+                }}
+              >
+                <div
+                  style={{
+                    height: "30px",
+                    width: "100%",
+                    // border: "1px solid green",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    color: "white",
+                  }}
+                >
+                  Type
+                </div>
+                <div
+                  style={{
+                    flex: 1,
+                    overflow: "scroll",
+                    backgroundColor: "#0f0f0f",
+                    borderRadius: "8px",
+                  }}
+                >
+                  {ATTACHMENT_TYPES.map((type) => (
+                    <div
+                      onClick={() => {
+                        toggleFilter({
+                          type: filterTypes.ATTACHMENT,
+                          value: type,
+                        });
+                      }}
+                      key={type}
+                      style={{
+                        width: "100%",
+                        height: "30px",
+                        display: "flex",
+                        flexDirection: "row",
+                        padding: "0px 5px",
+                        justifyContent: "space-between",
+                        color: "white",
+                        cursor: "pointer",
+                        backgroundColor: "#0f0f0f",
+                        borderBottom: "0.4px solid white",
+                        // border: "1px solid pink",
+                        alignItems: "center",
+                      }}
+                    >
+                      {type}
+                      <div
+                        style={{
+                          height: "17px",
+                          width: "17px",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          borderRadius: "4px",
+                          border: "1px solid white",
+                        }}
+                      >
+                        {modalFilters.types.includes(type) && (
+                          <FaCheck size={10} color={"white"} />
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div
+              onClick={(e) => {
+                e.stopPropagation();
+                confirmSelection();
+                filterModalExitAnimation();
+              }}
+              style={{
+                flex: 1,
+                height: "80%",
+                display: "flex",
+                flexDirection: "row",
+                cursor: "pointer",
+                backgroundColor: "#2562ff",
+                borderRadius: "8px",
+                marginTop: "10px",
+                marginLeft: "2px",
+                marginRight: "2px",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              Confirm Selection
+            </div>
+          </div>
+        </div>
       </div>
+
       <div
         style={{
           height: "180px",
@@ -1158,7 +1599,7 @@ function Statistics({
             width: "10px",
             height: "10px",
             top: `${processedPosition.top + 50}px`,
-            left: `${processedPosition.left - 30}px`,
+            left: `${processedPosition.left - 35}px`,
           }}
           topOffset={40}
           leftOffset={14}
@@ -1180,7 +1621,7 @@ function Statistics({
             width: "10px",
             height: "10px",
             top: `${pendingPosition.top + 50}px`,
-            left: `${pendingPosition.left + 30}px`,
+            left: `${pendingPosition.left + 45}px`,
           }}
           topOffset={40}
           leftOffset={14}
@@ -1253,7 +1694,6 @@ function Statistics({
           header={"This Month"}
           label={calculateThisMonthLabel}
           // selectedDate={selectedDate}
-          dateValue={"1/1-1/31"}
         />
         <svg
           // preserveAspectRatio="none"

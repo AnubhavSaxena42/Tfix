@@ -10,7 +10,7 @@ function OptionBox({
   // boxRef,
   initialDelay,
   onClick,
-  dateValue,
+
   position,
   topOffset,
   leftOffset,
@@ -28,15 +28,7 @@ function OptionBox({
   const labelRef = useRef(null);
   const [selected, setSelected] = useState(false);
   const [windowSize, setWindowSize] = useState("Big");
-  const BigWindowValues = {
-    BIG_TEXT_SELECTED: "59px",
-    SMALL_TEXT_SELECTED: "35px",
-    DATE_TEXT_SELECTED: "17px",
-    BIG_TEXT_NOT_SELECTED: "32px",
-    SMALL_TEXT_NOT_SELECTED: "24px",
-    DATE_TEXT_NOT_SELECTED: "14px",
-  };
-  const smallWindowValues = {};
+
   function getCurrentDimension() {
     return {
       width: window.innerWidth,
