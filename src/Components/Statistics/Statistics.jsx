@@ -1107,88 +1107,138 @@ function Statistics({
     return counterValue;
   }, [selectedDate.format("YYYY/MM/DD"), dateMap, mapLoading]);
 
-  const calculateRequestsData = useMemo(
-    (filters) => {
-      if (mapLoading) return;
+  const calculateRequestsData = useMemo(() => {
+    if (mapLoading) return;
+    //Edge Case here explain
+    const startOfWeek = dayjs(selectedDate).startOf(
+      selectedRange === SELECTABLE_RANGES.TODAY
+        ? "day"
+        : selectedRange === SELECTABLE_RANGES.THIS_WEEK
+        ? "week"
+        : "month"
+    );
+    const endOfWeek = dayjs(selectedDate).endOf(
+      selectedRange === SELECTABLE_RANGES.TODAY
+        ? "day"
+        : selectedRange === SELECTABLE_RANGES.THIS_WEEK
+        ? "week"
+        : "month"
+    );
+    console.log(
+      "CounterDataDebug:Function enter",
+      selectedDate,
+      startOfWeek,
+      endOfWeek
+    );
 
-      //Edge Case here explain
+    let currentDate = startOfWeek.clone();
+    let counterValueDataArray = [];
 
-      const startOfWeek = dayjs(selectedDate).startOf(
-        selectedRange === SELECTABLE_RANGES.TODAY
-          ? "day"
-          : selectedRange === SELECTABLE_RANGES.THIS_WEEK
-          ? "week"
-          : "month"
-      );
-      const endOfWeek = dayjs(selectedDate).endOf(
-        selectedRange === SELECTABLE_RANGES.TODAY
-          ? "day"
-          : selectedRange === SELECTABLE_RANGES.THIS_WEEK
-          ? "week"
-          : "month"
-      );
-      console.log(
-        "CounterDebug:Function enter",
-        selectedDate,
-        startOfWeek,
-        endOfWeek
-      );
+    while (currentDate.isSame(endOfWeek) || currentDate.isBefore(endOfWeek)) {
+      console.log("CounterDebug:In loop for date", currentDate);
+      if (dateMap.get(currentDate?.format("YYYY-MM-DD"))) {
+        counterValueDataArray.push(
+          dateMap.get(currentDate?.format("YYYY-MM-DD"))?.data
+        );
+      } else {
+        //Mock API hit
+        const dataObject = {
+          data: generateData(),
+          date: currentDate,
+        };
+        counterValueDataArray.push(dataObject?.data);
 
-      let currentDate = startOfWeek.clone();
-      let counterValueDataArray = [];
-
-      while (currentDate.isSame(endOfWeek) || currentDate.isBefore(endOfWeek)) {
-        console.log("CounterDebug:In loop for date", currentDate);
-        if (dateMap.get(currentDate?.format("YYYY-MM-DD"))) {
-          counterValueDataArray.push(
-            dateMap.get(currentDate?.format("YYYY-MM-DD"))?.data
-          );
-        } else {
-          //Mock API hit
-          const dataObject = {
-            data: generateData(),
-            date: currentDate,
-          };
-          counterValueDataArray.push(dataObject?.data);
-          dateMap.set(currentDate.format("YYYY-MM-DD"), dataObject);
-        }
-        currentDate = currentDate.add(1, "day");
+        dateMap.set(currentDate.format("YYYY-MM-DD"), dataObject);
       }
-      let counterValue = counterValueDataArray.reduce(
-        (accumulator, current) => {
-          for (let i = 0; i < current.length; i++) {
-            if (current[i]?.status === REQUEST_STATUS.PROCESSED) {
-              accumulator = {
-                ...accumulator,
-                numOfProcessedRequests: accumulator.numOfProcessedRequests + 1,
-                processedData: [...accumulator.processedData, current[i]],
-              };
-            } else {
-              accumulator = {
-                ...accumulator,
-                numOfPendingRequests: accumulator.numOfPendingRequests + 1,
-                pendingData: [...accumulator.pendingData, current[i]],
-              };
-            }
+      currentDate = currentDate.add(1, "day");
+    }
+
+    const filterCompanies =
+      filters?.companies?.length > 0 ? filters?.companies : COMPANIES;
+    const filterAttachments =
+      filters?.types?.length > 0 ? filters.types : ATTACHMENT_TYPES;
+    console.log("newDebug:", filterCompanies, filterAttachments);
+    let counterValue = counterValueDataArray.reduce(
+      (accumulator, current, index) => {
+        console.log("newDebug:Reduce Ran", index);
+        for (let i = 0; i < current.length; i++) {
+          if (
+            !(
+              filterCompanies.includes(current[i]?.company) &&
+              current[i]?.attachments.some((attachment) =>
+                filterAttachments.includes(attachment?.type)
+              )
+            )
+          ) {
+            console.log("NewDebug:returning Condition not matched", {
+              accumulator,
+              counterValueDataArray,
+              filterCompanies,
+              filterAttachments,
+              firstCondition: filterCompanies.includes(current[i]?.company),
+              secondCondition: current[i]?.attachments.some((attachment) => {
+                console.log(
+                  "newDebug:in some debug",
+                  filterAttachments,
+                  attachment
+                );
+                return filterAttachments.includes(attachment?.type);
+              }),
+              current: current[i],
+            });
+            continue;
           }
-          return accumulator;
-        },
-        {
-          // selectedDate: selectedDate.format("YYYY/MM/DD"),
-          numOfPendingRequests: 0,
-          numOfProcessedRequests: 0,
-          pendingData: [],
-          processedData: [],
+          console.log("newDebug:conditionMatched", {
+            counterValueDataArray,
+            filterCompanies,
+            filterAttachments,
+            firstCondition: filterCompanies.includes(current[i]?.company),
+            secondCondition: current[i]?.attachments.some((attachment) => {
+              console.log(
+                "newDebug:in some debug",
+                filterAttachments,
+                attachment
+              );
+              return filterAttachments.includes(attachment?.type);
+            }),
+            current: current[i],
+          });
+          if (current[i]?.status === REQUEST_STATUS.PROCESSED) {
+            accumulator = {
+              ...accumulator,
+              numOfProcessedRequests: accumulator.numOfProcessedRequests + 1,
+              processedData: [...accumulator.processedData, current[i]],
+            };
+          } else {
+            accumulator = {
+              ...accumulator,
+              numOfPendingRequests: accumulator.numOfPendingRequests + 1,
+              pendingData: [...accumulator.pendingData, current[i]],
+            };
+          }
         }
-      );
-      console.log("CounterDebug:Final", {
-        counterValueDataArray,
-        counterValue,
-      });
-      return counterValue;
-    },
-    [selectedDate.format("YYYY/MM/DD"), dateMap, mapLoading, selectedRange]
-  );
+        return accumulator;
+      },
+      {
+        // selectedDate: selectedDate.format("YYYY/MM/DD"),
+        numOfPendingRequests: 0,
+        numOfProcessedRequests: 0,
+        pendingData: [],
+        processedData: [],
+      }
+    );
+    console.log("newDebug:Final", {
+      counterValueDataArray,
+      counterValue,
+    });
+    return counterValue;
+  }, [
+    selectedDate.format("YYYY/MM/DD"),
+    dateMap,
+    mapLoading,
+    filters,
+    selectedRange,
+  ]);
 
   const calculateThisWeekLabel = useMemo(() => {
     //Edge Case here explain
