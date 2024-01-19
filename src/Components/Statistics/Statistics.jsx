@@ -2,6 +2,8 @@ import gsap, { Power2, Power3 } from "gsap";
 import React, { useEffect, useRef, useState } from "react";
 import OptionBox from "./Components/OptionBox/OptionBox";
 import DataBox from "./Components/DataBox/DataBox";
+import dayjs from "dayjs";
+import { generateData } from "../../core/helpers/helpers";
 
 function Statistics({
   dateMap,
@@ -69,6 +71,7 @@ function Statistics({
     top: 0,
     left: 0,
   });
+  const [monthLoading, setMonthLoading] = useState(false);
 
   let redProgress = 0;
   let pendingThisWeekProgress = 0;
@@ -915,6 +918,93 @@ function Statistics({
       resizeObserver.disconnect();
     };
   }, []);
+  function calculateThisMonthCounterValue(date) {
+    //Edge Case here explain
+    console.log("CounterDebug:Function enter", selectedDate);
+    const startOfMonth = dayjs(date).startOf("month");
+    const endOfMonth = dayjs(date).endOf("month");
+    console.log(
+      "CounterDebug:Function enter",
+      selectedDate,
+      startOfMonth,
+      endOfMonth
+    );
+
+    let currentDate = startOfMonth.clone();
+    let counterValue = 0;
+
+    while (currentDate.isSame(endOfMonth) || currentDate.isBefore(endOfMonth)) {
+      console.log("CounterDebug:In loop for date", currentDate);
+      if (dateMap.get(currentDate?.format("YYYY-MM-DD"))) {
+        counterValue += dateMap.get(currentDate?.format("YYYY-MM-DD"))?.data
+          ?.length;
+      } else {
+        //Mock API hit
+        const dataObject = {
+          data: generateData(),
+          date: currentDate,
+        };
+        counterValue += dataObject?.data?.length;
+        dateMap.set(currentDate.format("YYYY-MM-DD"), dataObject);
+      }
+
+      currentDate = currentDate.add(1, "day");
+    }
+    return counterValue;
+  }
+
+  function calculateThisWeekCounterValue(date) {
+    //Edge Case here explain
+    console.log("CounterDebug:Function enter", selectedDate);
+    const startOfWeek = dayjs(date).startOf("week");
+    const endOfWeek = dayjs(date).endOf("week");
+    console.log(
+      "CounterDebug:Function enter",
+      selectedDate,
+      startOfWeek,
+      endOfWeek
+    );
+
+    let currentDate = startOfWeek.clone();
+    let counterValue = 0;
+
+    while (currentDate.isSame(endOfWeek) || currentDate.isBefore(endOfWeek)) {
+      console.log("CounterDebug:In loop for date", currentDate);
+      if (dateMap.get(currentDate?.format("YYYY-MM-DD"))) {
+        counterValue += dateMap.get(currentDate?.format("YYYY-MM-DD"))?.data
+          ?.length;
+      } else {
+        //Mock API hit
+        const dataObject = {
+          data: generateData(),
+          date: currentDate,
+        };
+        counterValue += dataObject?.data?.length;
+        dateMap.set(currentDate.format("YYYY-MM-DD"), dataObject);
+      }
+
+      currentDate = currentDate.add(1, "day");
+    }
+    return counterValue;
+  }
+
+  function calculateThisWeekLabel(date) {
+    //Edge Case here explain
+    console.log("CounterDebug:Function enter", selectedDate);
+    const startOfWeek = dayjs(date).startOf("week");
+    const endOfWeek = dayjs(date).endOf("week");
+
+    return `${startOfWeek.format("MM/DD")}-${endOfWeek.format("MM/DD")}`;
+  }
+
+  function calculateThisMonthLabel(date) {
+    //Edge Case here explain
+    console.log("CounterDebug:Function enter", selectedDate);
+    const startOfMonth = dayjs(date).startOf("month");
+    const endOfMonth = dayjs(date).endOf("month");
+
+    return `${startOfMonth.format("MM/DD")}-${endOfMonth.format("MM/DD")}`;
+  }
 
   return (
     <div
@@ -935,15 +1025,19 @@ function Statistics({
     >
       {/* Filters */}
       <div
+        onClick={() => calculateThisMonthCounterValue(selectedDate)}
         style={{
           height: "90px",
           width: "100%",
           border: "1px solid yellow",
+          color: "white",
         }}
-      ></div>
+      >
+        click
+      </div>
       <div
         style={{
-          height: "160px",
+          height: "180px",
           width: "100%",
           border: "1px solid yellow",
           // marginBottom: "5%",
@@ -995,10 +1089,10 @@ function Statistics({
           boxRef={todayBox}
           onClick={AnimateSelectToday}
           position={divPosition}
-          topOffset={50}
-          leftOffset={21}
+          topOffset={15}
+          leftOffset={47}
           duration={2}
-          optionalStyles={{ width: "50px", height: "50px" }}
+          optionalStyles={{ width: "100px", height: "1px" }}
           counterValue={
             mapLoading
               ? "00"
@@ -1008,6 +1102,8 @@ function Statistics({
           }
           header={"Today"}
           dateValue={"1/16/24"}
+          label={selectedDate.format("MM/DD/YYYY")}
+          selectedDate={selectedDate}
         />
         <OptionBox
           initialDelay={INITIAL_DELAY}
@@ -1015,14 +1111,21 @@ function Statistics({
           onClick={AnimateSelectThisWeek}
           position={thisWeekPosition}
           topOffset={15}
-          leftOffset={25}
+          leftOffset={47}
           optionalStyles={{
-            width: "50px",
+            width: "100px",
             height: "1px",
           }}
-          counterValue={"00"}
+          counterValue={
+            mapLoading
+              ? "00"
+              : calculateThisWeekCounterValue(selectedDate)
+                  .toString()
+                  .padStart(2, "0")
+          }
           header={"This Week"}
           dateValue={"1/1-1/7"}
+          label={calculateThisWeekLabel(selectedDate)}
         />
         <OptionBox
           initialDelay={INITIAL_DELAY}
@@ -1030,10 +1133,18 @@ function Statistics({
           onClick={AnimateSelectThisMonth}
           position={thisMonthPosition}
           topOffset={15}
-          leftOffset={12}
-          optionalStyles={{ width: "50px", height: "1px" }}
-          counterValue={"00"}
+          leftOffset={45}
+          optionalStyles={{ width: "100px", height: "1px" }}
+          counterValue={
+            mapLoading
+              ? "00"
+              : calculateThisMonthCounterValue(selectedDate)
+                  .toString()
+                  .padStart(2, "0")
+          }
           header={"This Month"}
+          label={calculateThisMonthLabel(selectedDate)}
+          // selectedDate={selectedDate}
           dateValue={"1/1-1/31"}
         />
         <svg

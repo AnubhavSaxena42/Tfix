@@ -4,6 +4,7 @@ import { useRef } from "react";
 import gsap from "gsap";
 import SlotCounter from "react-slot-counter";
 import { SMALL_WINDOW_WIDTH } from "../../../Timeline/constants";
+import SplitType from "split-type";
 
 function OptionBox({
   // boxRef,
@@ -14,10 +15,14 @@ function OptionBox({
   topOffset,
   leftOffset,
   header,
+  selectedDate,
+  label,
   optionalStyles,
   counterValue,
 }) {
   const boxRef = useRef(null);
+  const valueRef = useRef(null);
+  const labelRef = useRef(null);
   const [selected, setSelected] = useState(false);
   const [windowSize, setWindowSize] = useState("Big");
   const BigWindowValues = {
@@ -64,11 +69,11 @@ function OptionBox({
       fontSize: "12px",
     });
 
-    gsap.to(boxRef.current.querySelectorAll(".counter"), {
-      fontSize: "44px",
-    });
+    // gsap.to(boxRef.current.querySelectorAll(".counter"), {
+    //   fontSize: "44px",
+    // });
     gsap.to(boxRef.current.querySelectorAll(".counterContainer"), {
-      bottom: "50px",
+      bottom: "30px",
     });
   };
   const transitionToSmallWindowState = () => {
@@ -85,11 +90,11 @@ function OptionBox({
       fontSize: "8px",
     });
 
-    gsap.to(boxRef.current.querySelectorAll(".counter"), {
-      fontSize: "24px",
-    });
+    // gsap.to(boxRef.current.querySelectorAll(".counter"), {
+    //   fontSize: "24px",
+    // });
     gsap.to(boxRef.current.querySelectorAll(".counterContainer"), {
-      bottom: "14px",
+      bottom: "30px",
     });
   };
   useEffect(() => {
@@ -235,6 +240,43 @@ function OptionBox({
       });
     }
   };
+  const updateTextAnimation = () => {
+    const vRef = valueRef.current;
+    gsap.fromTo(
+      vRef,
+      {
+        y: -40,
+        opacity: 0,
+      },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 1,
+        ease: "power1.out",
+      }
+    );
+  };
+
+  useEffect(() => {
+    const lRef = labelRef.current;
+    gsap.fromTo(
+      lRef,
+      {
+        // x: -10,
+        opacity: 0,
+      },
+      {
+        x: 0,
+        opacity: 1,
+        duration: 1,
+        ease: "power1.out",
+      }
+    );
+  }, [label]);
+
+  useEffect(() => {
+    updateTextAnimation();
+  }, [counterValue, selectedDate]);
 
   useEffect(() => {
     // setUnselectedValues();
@@ -255,18 +297,19 @@ function OptionBox({
       }}
       className={`optionBox`}
     >
-      <SlotCounter
-        containerClassName="counterContainer"
-        charClassName="counter"
-        initialValue="00"
-        // useMonospaceWidth={true}
-        startValueOnce
-        duration={1}
-        animateUnchanged={false}
-        value={counterValue}
-        // animateOnVisible
-      />
-
+      <div
+        ref={valueRef}
+        className="counterValueText"
+        style={{
+          // fontSize: "24px",
+          fontSize: "44px",
+          position: "absolute",
+          // bottom: "40px",
+          bottom: "55px",
+        }}
+      >
+        {counterValue}
+      </div>
       <div
         style={{
           fontSize: "35px",
@@ -276,7 +319,9 @@ function OptionBox({
       >
         {formatString(header)}
       </div>
-      <div className="dateValue">{dateValue}</div>
+      <div ref={labelRef} className="dateValue">
+        {label}
+      </div>
     </div>
   );
 }
