@@ -145,12 +145,15 @@ function Timer() {
       </div>
 
       {/* Current Time Slot Counter */}
-      <SlotCounter
+      {/* <SlotCounter
         containerClassName="timerCounterContainer"
         charClassName="timerCounterCharacter"
         initialValue={secondsToTimeString(getCurrentSecondsOfDay)}
         value={stringTimeValue}
-      />
+      /> */}
+      <div className="timerCounterContainer">
+        <div className="timerCounterCharacter">{stringTimeValue}</div>
+      </div>
     </div>
   );
 }
