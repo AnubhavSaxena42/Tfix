@@ -107,6 +107,7 @@ export const useFilters = ({ filters, setFilters, initialDelay }) => {
         duration: 1,
         ease: "power2.in",
         delay: 6,
+        zIndex: 3,
       }
     );
   };
