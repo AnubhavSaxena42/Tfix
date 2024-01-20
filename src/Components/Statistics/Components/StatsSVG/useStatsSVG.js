@@ -31,7 +31,7 @@ export const useStatsSVG = ({ INITIAL_DELAY, statsRef }) => {
   const processedThisMonthPolygon2 = useRef(null);
   const processedThisMonthPolygon3 = useRef(null);
   const processedThisMonthPolygon4 = useRef(null);
-
+  const [animatingSwitch, setAnimatingSwitch] = useState(false);
   const [divPosition, setDivPosition] = useState({ top: 0, left: 0 });
   const [thisWeekPosition, setThisWeekPosition] = useState({ top: 0, left: 0 });
   const [thisMonthPosition, setThisMonthPosition] = useState({
@@ -792,6 +792,12 @@ export const useStatsSVG = ({ INITIAL_DELAY, statsRef }) => {
       `M0 100 Q10 ${30 + processedThisMonthProgress}, 160 20`
     );
   };
+
+  const setAnimatingSwitchToFalseAfterDelay = () => {
+    setTimeout(() => {
+      setAnimatingSwitch(false);
+    }, 2200);
+  };
   useEffect(() => {
     const resizeObserver = new ResizeObserver((entries) => {
       for (const entry of entries) {
@@ -817,6 +823,9 @@ export const useStatsSVG = ({ INITIAL_DELAY, statsRef }) => {
   }, []);
 
   return {
+    animatingSwitch,
+    setAnimatingSwitch,
+    setAnimatingSwitchToFalseAfterDelay,
     processedPosition,
     pendingPosition,
     todayBox,

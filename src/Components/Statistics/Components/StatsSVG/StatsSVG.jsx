@@ -20,6 +20,9 @@ function StatsSVG({
   calculateThisWeekLabel,
 }) {
   const {
+    animatingSwitch,
+    setAnimatingSwitch,
+    setAnimatingSwitchToFalseAfterDelay,
     processedPosition,
     pendingPosition,
     todayBox,
@@ -130,6 +133,11 @@ function StatsSVG({
         />
 
         <OptionBox
+          animatingSwitch={animatingSwitch}
+          setAnimatingSwitch={setAnimatingSwitch}
+          setAnimatingSwitchToFalseAfterDelay={
+            setAnimatingSwitchToFalseAfterDelay
+          }
           initialDelay={INITIAL_DELAY}
           boxRef={todayBox}
           onClick={AnimateSelectToday}
@@ -154,6 +162,11 @@ function StatsSVG({
           selectedDate={selectedDate}
         />
         <OptionBox
+          animatingSwitch={animatingSwitch}
+          setAnimatingSwitch={setAnimatingSwitch}
+          setAnimatingSwitchToFalseAfterDelay={
+            setAnimatingSwitchToFalseAfterDelay
+          }
           initialDelay={INITIAL_DELAY}
           boxRef={thisWeekBox}
           selectedRange={selectedRange}
@@ -177,6 +190,11 @@ function StatsSVG({
           label={calculateThisWeekLabel}
         />
         <OptionBox
+          animatingSwitch={animatingSwitch}
+          setAnimatingSwitch={setAnimatingSwitch}
+          setAnimatingSwitchToFalseAfterDelay={
+            setAnimatingSwitchToFalseAfterDelay
+          }
           initialDelay={INITIAL_DELAY}
           boxRef={thisMonthBox}
           selectedRange={selectedRange}

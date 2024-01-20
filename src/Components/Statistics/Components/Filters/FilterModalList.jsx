@@ -16,7 +16,7 @@ function FilterModalList({ data, onClick, selectedOptions, title }) {
             {dataItem}
             <div className="filterModalListItemCheckbox">
               {selectedOptions.includes(dataItem) && (
-                <FaCheck size={10} color={"white"} />
+                <FaCheck size={7} color={"white"} />
               )}
             </div>
           </div>

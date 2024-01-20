@@ -19,6 +19,7 @@ export const useStatistics = ({
     types: [],
     companies: [],
   });
+
   const statsRef = useRef(null);
 
   const calculateThisMonthCounterValue = useMemo(() => {

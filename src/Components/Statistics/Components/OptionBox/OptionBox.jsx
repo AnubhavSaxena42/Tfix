@@ -10,7 +10,9 @@ function OptionBox({
   // boxRef,
   initialDelay,
   onClick,
-
+  animatingSwitch,
+  setAnimatingSwitch,
+  setAnimatingSwitchToFalseAfterDelay,
   position,
   topOffset,
   leftOffset,
@@ -218,6 +220,11 @@ function OptionBox({
 
   const onClickBox = () => {
     // return;
+    if (animatingSwitch) {
+      return;
+    }
+    setAnimatingSwitch(true);
+    setAnimatingSwitchToFalseAfterDelay();
     setSelectedRange(boxRange);
     onClick();
   };

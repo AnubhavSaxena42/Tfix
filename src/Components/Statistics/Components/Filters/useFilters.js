@@ -1,5 +1,6 @@
 import gsap from "gsap";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { SMALL_WINDOW_WIDTH } from "../../../Timeline/constants";
 
 export const useFilters = ({ filters, setFilters }) => {
   const [modalFilters, setModalFilters] = useState({
@@ -8,6 +9,98 @@ export const useFilters = ({ filters, setFilters }) => {
   });
 
   const filterModalRef = useRef(null);
+  const [windowSize, setWindowSize] = useState("Big");
+
+  function getCurrentDimension() {
+    return {
+      width: window.innerWidth,
+      height: window.innerHeight,
+    };
+  }
+  const updateDimension = () => {
+    const { width, height } = getCurrentDimension();
+    console.log("Updating Dimension Function:", width, windowSize);
+    if (width <= SMALL_WINDOW_WIDTH) {
+      if (windowSize === "Big") {
+        console.log("Setting Window Size to small");
+        setWindowSize("Small");
+        transitionToSmallWindowState();
+      }
+    } else {
+      if (windowSize === "Small") {
+        console.log("Setting window Size to big");
+        setWindowSize("Big");
+        transitionToBigWindowState();
+      }
+    }
+  };
+  const transitionToSmallWindowState = () => {
+    gsap.to(".filterModal", {
+      height: "195px",
+      width: "190px",
+      left: "15px",
+    });
+    gsap.to(".filterModalListItemCheckbox", {
+      height: "12px",
+      width: "12px",
+    });
+    gsap.to(".filterModalListItem", {
+      fontSize: "10px",
+    });
+    gsap.to(".filterModalListTitleContainer", {
+      fontSize: "12px",
+      height: "18px",
+    });
+    gsap.to(".filterModalConfirmSelectionButton", {
+      borderRadius: "4px",
+      fontSize: "12px",
+    });
+    gsap.to(".filterByButton", {
+      height: "10px",
+      width: "10px",
+    });
+    gsap.to(".appliedFilterItem", {
+      fontSize: "10px",
+    });
+  };
+
+  const transitionToBigWindowState = () => {
+    gsap.to(".filterModal", {
+      height: "300px",
+      width: "300px",
+      left: "20px",
+    });
+    gsap.to(".filterModalListItemCheckbox", {
+      height: "17px",
+      width: "17px",
+    });
+    gsap.to(".filterModalListItem", {
+      fontSize: "14px",
+    });
+    gsap.to(".filterModalListTitleContainer", {
+      fontSize: "16px",
+      height: "30px",
+    });
+    gsap.to(".filterModalConfirmSelectionButton", {
+      borderRadius: "8px",
+      fontSize: "14px",
+    });
+    gsap.to(".filterByButton", {
+      height: "14px",
+      width: "14px",
+    });
+    gsap.to(".appliedFilterItem", {
+      fontSize: "12px",
+    });
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", updateDimension);
+    updateDimension();
+    return () => {
+      window.removeEventListener("resize", updateDimension);
+    };
+  }, [windowSize]);
 
   const filterTypes = {
     COMPANY: "COMPANY",
@@ -15,7 +108,6 @@ export const useFilters = ({ filters, setFilters }) => {
   };
 
   const toggleFilter = ({ type, value }) => {
-    console.log("toggleClicked", type, value);
     switch (type) {
       case filterTypes.COMPANY:
         if (modalFilters.companies.includes(value)) {
