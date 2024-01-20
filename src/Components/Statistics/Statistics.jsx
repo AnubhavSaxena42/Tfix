@@ -1262,117 +1262,18 @@ function Statistics({
   }, [selectedDate.format("YYYY/MM/DD"), dateMap, mapLoading]);
 
   return (
-    <div
-      ref={statsRef}
-      className="statisticsContainer"
-      // style={{
-      //   //Add Minimum height on statistics
-      //   height: "50%",
-      //   minHeight: "200px",
-      //   width: "100%",
-      //   flexDirection: "column",
-      //   border: "1px solid red",
-      //   alignItems: "center",
-      //   alignSelf: "center",
-      //   display: "flex",
-      //   overflow: "hidden",
-      // }}
-    >
+    <div ref={statsRef} className="statisticsContainer">
       {/* Filters */}
       <div className="filtersContainer">
-        <div
-          className="filterByTextContainer"
-          // style={{
-          //   height: "20px",
-          //   display: "flex",
-          //   justifyContent: "center",
-          //   alignItems: "center",
-          // }}
-        >
-          Filter by:
-        </div>
+        <div className="filterByTextContainer">Filter by:</div>
 
-        <div
-          className="filterByButton"
-          // style={{
-          //   zIndex: 2,
-          //   margin: "0px 5px",
-          //   height: "20px",
-          //   width: "20px",
-          //   borderRadius: "50%",
-          //   backgroundColor: "#2562ff",
-          //   cursor: "pointer",
-          //   position: "relative",
-          //   display: "flex",
-          //   justifyContent: "center",
-          //   alignItems: "center",
-          // }}
-          onClick={filterModalEnterAnimation}
-        >
+        <div className="filterByButton" onClick={filterModalEnterAnimation}>
           <FaPlus color={"#242124"} size={10} />
-          <div
-            ref={filterModalRef}
-            className="filterModal"
-            // style={{
-            //   height: "300px",
-            //   padding: "10px",
-            //   display: "flex",
-            //   flexDirection: "column",
-            //   opacity: 0,
-            //   visibility: "hidden",
-            //   cursor: "default",
-            //   width: "300px",
-            //   backgroundColor: "#242124",
-            //   borderRadius: "8px",
-            //   position: "absolute",
-            //   left: "25px",
-            //   top: "10px",
-            // }}
-          >
-            <div
-              className="filterModalListsContainer"
-              // style={{
-              //   width: "100%",
-              //   height: "80%",
-              //   // backgroundColor: "yellow",
-              //   display: "flex",
-              //   flexDirection: "row",
-              // }}
-            >
-              <div
-                className="filterModalListContainer"
-                // style={{
-                //   display: "flex",
-                //   flexDirection: "column",
-                //   flex: 1,
-                //   // border: "1px solid saddlebrown",
-                //   margin: "0px 2px",
-                // }}
-              >
-                <div
-                  className="filterModalListTitleContainer"
-                  // style={{
-                  //   height: "30px",
-                  //   width: "100%",
-                  //   // border: "1px solid green",
-                  //   display: "flex",
-                  //   justifyContent: "center",
-                  //   alignItems: "center",
-                  //   color: "white",
-                  // }}
-                >
-                  Company
-                </div>
-                <div
-                  className="filterModalListScrollView"
-                  // style={{
-                  //   flex: 1,
-                  //   overflow: "scroll",
-                  //   backgroundColor: "#0f0f0f",
-
-                  //   borderRadius: "8px",
-                  // }}
-                >
+          <div ref={filterModalRef} className="filterModal">
+            <div className="filterModalListsContainer">
+              <div className="filterModalListContainer">
+                <div className="filterModalListTitleContainer">Company</div>
+                <div className="filterModalListScrollView">
                   {COMPANIES.map((company) => (
                     <div
                       onClick={() => {
@@ -1383,34 +1284,9 @@ function Statistics({
                       }}
                       key={company}
                       className="filterModalListItem"
-                      // style={{
-                      //   width: "100%",
-                      //   height: "30px",
-                      //   display: "flex",
-                      //   flexDirection: "row",
-                      //   padding: "0px 5px",
-                      //   justifyContent: "space-between",
-                      //   color: "white",
-                      //   cursor: "pointer",
-                      //   backgroundColor: "#0f0f0f",
-                      //   // border: "1px solid pink",
-                      //   borderBottom: "0.4px solid white",
-                      //   alignItems: "center",
-                      // }}
                     >
                       {company}
-                      <div
-                        className="filterModalListItemCheckbox"
-                        // style={{
-                        //   height: "17px",
-                        //   width: "17px",
-                        //   display: "flex",
-                        //   justifyContent: "center",
-                        //   alignItems: "center",
-                        //   borderRadius: "4px",
-                        //   border: "1px solid white",
-                        // }}
-                      >
+                      <div className="filterModalListItemCheckbox">
                         {modalFilters.companies.includes(company) && (
                           <FaCheck size={10} color={"white"} />
                         )}
@@ -1420,39 +1296,9 @@ function Statistics({
                 </div>
               </div>
 
-              <div
-                className="filterModalListContainer"
-                // style={{
-                //   display: "flex",
-                //   flexDirection: "column",
-                //   flex: 1,
-                //   // border: "1px solid saddlebrown",
-                //   margin: "0px 2px",
-                // }}
-              >
-                <div
-                  className="filterModalListTitleContainer"
-                  // style={{
-                  //   height: "30px",
-                  //   width: "100%",
-                  //   // border: "1px solid green",
-                  //   display: "flex",
-                  //   justifyContent: "center",
-                  //   alignItems: "center",
-                  //   color: "white",
-                  // }}
-                >
-                  Type
-                </div>
-                <div
-                  className="filterModalListScrollView"
-                  // style={{
-                  //   flex: 1,
-                  //   overflow: "scroll",
-                  //   backgroundColor: "#0f0f0f",
-                  //   borderRadius: "8px",
-                  // }}
-                >
+              <div className="filterModalListContainer">
+                <div className="filterModalListTitleContainer">Type</div>
+                <div className="filterModalListScrollView">
                   {ATTACHMENT_TYPES.map((type) => (
                     <div
                       onClick={() => {
@@ -1463,34 +1309,9 @@ function Statistics({
                       }}
                       className="filterModalListItem"
                       key={type}
-                      // style={{
-                      //   width: "100%",
-                      //   height: "30px",
-                      //   display: "flex",
-                      //   flexDirection: "row",
-                      //   padding: "0px 5px",
-                      //   justifyContent: "space-between",
-                      //   color: "white",
-                      //   cursor: "pointer",
-                      //   backgroundColor: "#0f0f0f",
-                      //   borderBottom: "0.4px solid white",
-                      //   // border: "1px solid pink",
-                      //   alignItems: "center",
-                      // }}
                     >
                       {type}
-                      <div
-                        className="filterModalListItemCheckbox"
-                        // style={{
-                        //   height: "17px",
-                        //   width: "17px",
-                        //   display: "flex",
-                        //   justifyContent: "center",
-                        //   alignItems: "center",
-                        //   borderRadius: "4px",
-                        //   border: "1px solid white",
-                        // }}
-                      >
+                      <div className="filterModalListItemCheckbox">
                         {modalFilters.types.includes(type) && (
                           <FaCheck size={10} color={"white"} />
                         )}
@@ -1508,68 +1329,16 @@ function Statistics({
                 filterModalExitAnimation();
               }}
               className="filterModalConfirmSelectionButton"
-              // style={{
-              //   flex: 1,
-              //   height: "80%",
-              //   display: "flex",
-              //   flexDirection: "row",
-              //   cursor: "pointer",
-              //   backgroundColor: "#2562ff",
-              //   borderRadius: "8px",
-              //   marginTop: "10px",
-              //   marginLeft: "2px",
-              //   marginRight: "2px",
-              //   justifyContent: "center",
-              //   alignItems: "center",
-              // }}
             >
               Confirm Selection
             </div>
           </div>
         </div>
-        <div
-          className="appliedFiltersContainer"
-          // style={{
-          //   flex: 1,
-          //   border: "1px solid green",
-          //   display: "flex",
-          //   flexDirection: "row",
-          //   overflow: "scroll",
-          // }}
-        >
+        <div className="appliedFiltersContainer">
           {filters.companies.map((company) => (
-            <div
-              key={company}
-              className="appliedFilterItem"
-              // style={{
-              //   height: "20px",
-              //   minWidth: "90px",
-              //   padding: "3px",
-              //   margin: "0px 3px",
-              //   border: "1px solid #838383",
-              //   borderRadius: "5px",
-              //   display: "flex",
-              //   flexDirection: "row",
-              //   justifyContent: "center",
-              //   alignItems: "center",
-              //   fontSize: "12px",
-              // }}
-            >
+            <div key={company} className="appliedFilterItem">
               {`comp.-${company}`}
-              <div
-                className="filterItemRemoveButton"
-                // style={{
-                //   height: "10px",
-                //   width: "10px",
-                //   marginLeft: "2px",
-                //   cursor: "pointer",
-                //   display: "flex",
-                //   justifyContent: "center",
-                //   alignItems: "center",
-                //   backgroundColor: "#ff7425",
-                //   borderRadius: "50%",
-                // }}
-              >
+              <div className="filterItemRemoveButton">
                 <ImCross
                   onClick={() => {
                     removeFilterFromTag({
@@ -1585,38 +1354,9 @@ function Statistics({
           ))}
 
           {filters.types.map((type) => (
-            <div
-              key={type}
-              className="appliedFilterItem"
-              // style={{
-              //   height: "20px",
-              //   minWidth: "90px",
-              //   padding: "3px",
-              //   margin: "0px 3px",
-              //   fontSize: "12px",
-              //   border: "1px solid #838383",
-              //   borderRadius: "5px",
-              //   display: "flex",
-              //   flexDirection: "row",
-              //   justifyContent: "center",
-              //   alignItems: "center",
-              // }}
-            >
+            <div key={type} className="appliedFilterItem">
               {`type-${type}`}
-              <div
-                className="filterItemRemoveButton"
-                // style={{
-                //   height: "10px",
-                //   width: "10px",
-                //   marginLeft: "2px",
-                //   cursor: "pointer",
-                //   backgroundColor: "#ff7425",
-                //   display: "flex",
-                //   justifyContent: "center",
-                //   alignItems: "center",
-                //   borderRadius: "50%",
-                // }}
-              >
+              <div className="filterItemRemoveButton">
                 <ImCross
                   onClick={() => {
                     removeFilterFromTag({
@@ -1632,23 +1372,10 @@ function Statistics({
           ))}
         </div>
       </div>
-      <div
-        style={{
-          height: "300px",
-          width: "100%",
-          border: "1px solid yellow",
-          // marginBottom: "5%",
-        }}
-      ></div>
-
+      {/* Filters Container over */}
+      <div className="svgUpperBox"></div>
       {/* SVG */}
-      <div
-        style={{
-          height: "35%",
-          width: "33%",
-          border: "1px solid blue",
-        }}
-      >
+      <div className="svgContainer">
         <DataBox
           position={processedPosition}
           displayValue={"Processed"}
@@ -1763,12 +1490,7 @@ function Statistics({
         <svg
           // preserveAspectRatio="none"
           viewBox="0 0 100 100"
-          style={{
-            height: "80%",
-            width: "100%",
-            border: "1px solid purple",
-            overflow: "visible",
-          }}
+          className="svg"
         >
           <defs>
             {/* Define the linear gradient */}
@@ -2160,14 +1882,7 @@ function Statistics({
         </svg>
       </div>
       {/* Processed and pending count */}
-      <div
-        style={{
-          height: "140px",
-          width: "100%",
-          border: "1px solid blue",
-          // marginBottom: "5%",
-        }}
-      ></div>
+      <div className="svgLowerBox"></div>
     </div>
   );
 }
