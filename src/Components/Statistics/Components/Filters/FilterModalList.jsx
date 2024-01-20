@@ -1,5 +1,6 @@
 import React from "react";
 import { FaCheck } from "react-icons/fa";
+import "./filters.css";
 
 function FilterModalList({ data, onClick, selectedOptions, title }) {
   return (

@@ -7,6 +7,7 @@ import {
 } from "../../../../core/constants/constants";
 import { useFilters } from "./useFilters";
 import AppliedFiltersList from "./AppliedFiltersList";
+import "./filters.css";
 
 function Filters({ filters, setFilters }) {
   const {

@@ -1,0 +1,27 @@
+.svgUpperBox {
+  height: 300px;
+  width: 100%;
+  border: 1px solid yellow;
+  /* margin-bottom: 5% */
+}
+
+.svgLowerBox {
+  height: 140px;
+  width: 100%;
+  border: 1px solid blue;
+  /* margin-bottom: 5%; */
+}
+
+.svgContainer {
+  height: 35%;
+  width: 33%;
+  border: 1px solid blue;
+  /* background-color: pink; */
+}
+
+.svg {
+  height: 80%;
+  width: 100%;
+  border: 1px solid purple;
+  overflow: visible;
+}

@@ -3,6 +3,7 @@ import DataBox from "../DataBox/DataBox";
 import OptionBox from "../OptionBox/OptionBox";
 import { SELECTABLE_RANGES } from "../../../../core/constants/constants";
 import { useStatsSVG } from "./useStatsSVG";
+import "./statsSvg.css";
 
 function StatsSVG({
   statsRef,
@@ -36,7 +37,6 @@ function StatsSVG({
     thisWeekCircleRef,
     topCircleRef,
     pendingCircleRef,
-
     processedCircleRef,
     processedThisMonthPolygon4,
     processedThisMonthPolygon3,
