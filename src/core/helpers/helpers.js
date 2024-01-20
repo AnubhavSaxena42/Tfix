@@ -6,6 +6,8 @@ import {
 } from "../constants/constants";
 import dayjs from "dayjs";
 
+export const lerp = (x, y, a) => x * (1 - a) + y * a;
+
 export function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
