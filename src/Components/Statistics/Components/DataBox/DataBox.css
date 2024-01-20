@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  border: 1px solid rgb(255, 158, 158);
+  /* border: 1px solid rgb(255, 158, 158); */
   align-items: center;
   font-family: "Jura";
   font-size: 20px;
@@ -13,6 +13,9 @@
   font-size: 44px;
 }
 
+.counterValueText {
+  font-size: 44px;
+}
 .firstLetter {
   font-size: 24px;
 }

@@ -8,12 +8,12 @@
   justify-content: flex-start;
   align-items: center;
   color: #fa8383;
-  border: 1px solid sandybrown;
+  /* border: 1px solid sandybrown; */
   height: 100%;
   font-family: "Jura";
 }
 .timerContainer {
-  border: 1px solid cyan;
+  /* border: 1px solid cyan; */
   height: 100px;
   min-height: 60px;
   display: flex;
@@ -24,5 +24,5 @@
 .timerSliderContainer {
   flex: 1;
   margin-right: 6px;
-  border: 1px solid white;
+  /* border: 1px solid white; */
 }

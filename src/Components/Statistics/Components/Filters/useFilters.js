@@ -2,7 +2,7 @@ import gsap from "gsap";
 import { useEffect, useRef, useState } from "react";
 import { SMALL_WINDOW_WIDTH } from "../../../Timeline/constants";
 
-export const useFilters = ({ filters, setFilters }) => {
+export const useFilters = ({ filters, setFilters, initialDelay }) => {
   const [modalFilters, setModalFilters] = useState({
     types: [],
     companies: [],
@@ -94,6 +94,23 @@ export const useFilters = ({ filters, setFilters }) => {
     });
   };
 
+  const filtersEnterAnimation = () => {
+    gsap.fromTo(
+      ".filtersContainer",
+      {
+        opacity: 0,
+        y: 20,
+      },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: "power2.in",
+        delay: 6,
+      }
+    );
+  };
+
   useEffect(() => {
     window.addEventListener("resize", updateDimension);
     updateDimension();
@@ -102,6 +119,9 @@ export const useFilters = ({ filters, setFilters }) => {
     };
   }, [windowSize]);
 
+  useEffect(() => {
+    filtersEnterAnimation();
+  }, []);
   const filterTypes = {
     COMPANY: "COMPANY",
     ATTACHMENT: "ATTACHMENT",

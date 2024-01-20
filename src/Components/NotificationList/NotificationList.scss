@@ -5,14 +5,14 @@
   font-family: Jura;
   overflow: scroll;
   font-size: 16px;
-  border: 1px solid slateblue;
+  // border: 1px solid slateblue;
 }
 
 .notificationListItemPointerContainer {
   height: 100%;
   width: 8%;
   // backgroundColor: "green",
-  border: 1px solid pink;
+  // border: 1px solid pink;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -31,7 +31,7 @@
   width: 10%;
   padding: 0% 1%;
   // backgroundColor: "green",
-  border: 1px solid pink;
+  // border: 1px solid pink;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -50,7 +50,7 @@
   width: 5%;
   padding: 0% 1%;
   // backgroundColor: "green",
-  border: 1px solid pink;
+  // border: 1px solid pink;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -60,7 +60,7 @@
 .notificationListItemInfoContainer {
   flex: 1;
   // backgroundColor: "green",
-  border: 1px solid pink;
+  // border: 1px solid pink;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -72,7 +72,7 @@
   text-overflow: ellipses;
 }
 .notificationListItemInfoPlaceholder {
-  border: 1px solid saddlebrown;
+  // border: 1px solid saddlebrown;
   flex: 1;
 }
 .notificationListItemInfoSubjectContainer {
@@ -110,7 +110,7 @@
   width: 10%;
   padding: 0% 1%;
   // backgroundColor: "green",
-  border: 1px solid pink;
+  // border: 1px solid pink;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -123,7 +123,7 @@
   width: 20%;
   padding: 0% 1%;
   // backgroundColor: "green",
-  border: 1px solid pink;
+  // border: 1px solid pink;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -137,7 +137,7 @@
   height: 80px;
   width: 100%;
   /* background-color: red; */
-  border-bottom: 0.2px solid white;
+  // border-bottom: 0.2px solid white;
   /* max-width: 1200px; */
   cursor: pointer;
   &:hover {

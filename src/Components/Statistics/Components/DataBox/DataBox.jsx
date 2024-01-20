@@ -68,7 +68,6 @@ function DataBox({
     [displayValue]
   );
 
-  console.log("Updating Dimension Function:", windowSize);
   const transitionToBigWindowState = () => {
     gsap.to(dataBox.current.querySelectorAll(".otherLetters"), {
       fontSize: "18px",
@@ -109,12 +108,6 @@ function DataBox({
   }, [windowSize]);
 
   useEffect(() => {
-    gsap.set(dataBox.current.querySelectorAll(".otherLetters"), {
-      fontSize: "18px",
-    });
-    gsap.set(dataBox.current.querySelectorAll(".firstLetter"), {
-      fontSize: "24px",
-    });
     dataBoxEnterAnimation();
     updateDimension();
   }, []);

@@ -25,7 +25,11 @@ function Statistics({
 
   return (
     <div ref={statsRef} className="statisticsContainer">
-      <Filters filters={filters} setFilters={setFilters} />
+      <Filters
+        filters={filters}
+        setFilters={setFilters}
+        initialDelay={INITIAL_DELAY}
+      />
       <StatsSVG
         statsRef={statsRef}
         dateMap={dateMap}

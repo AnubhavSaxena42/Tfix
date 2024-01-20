@@ -122,6 +122,7 @@ const Spikes = ({
         duration: 0.2,
         backgroundColor: objectAtSpike?.data?.length > 0 ? "#fbf2a4" : "none",
         color: "black",
+        fontStyle: "bold",
       });
       gsap.to(dayNumberRef.current, { y: 10, duration: 0.2 });
       gsap.to(spikeMonthRef.current, { y: 10, duration: 0.2 });

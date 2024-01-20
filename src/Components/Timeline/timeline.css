@@ -9,7 +9,7 @@
   padding-top: 10px;
 
   /* padding-top: 30px; */
-  border: 1px solid tomato;
+  /* border: 1px solid tomato; */
   width: 100%;
   overflow: hidden;
   display: flex;
@@ -29,7 +29,7 @@
   /* // backgroundColor: "orangered" */
   font-size: 20px;
   display: flex;
-  border: 1px solid orangered;
+  /* border: 1px solid orangered; */
   margin-bottom: 10px;
 }
 

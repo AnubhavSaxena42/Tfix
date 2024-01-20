@@ -9,7 +9,7 @@ import { useFilters } from "./useFilters";
 import AppliedFiltersList from "./AppliedFiltersList";
 import "./filters.css";
 
-function Filters({ filters, setFilters }) {
+function Filters({ filters, setFilters, initialDelay }) {
   const {
     filterModalRef,
     filterModalEnterAnimation,
@@ -19,7 +19,7 @@ function Filters({ filters, setFilters }) {
     confirmSelection,
     filterModalExitAnimation,
     removeFilterFromTag,
-  } = useFilters({ filters, setFilters });
+  } = useFilters({ filters, setFilters, initialDelay });
 
   return (
     <div className="filtersContainer">

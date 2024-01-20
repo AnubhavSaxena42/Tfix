@@ -23,7 +23,7 @@ const theme = createTheme({
   },
 });
 function Timer() {
-  const INITIAL_DELAY = 7.2;
+  const INITIAL_DELAY = 6;
   const timerRef = useRef(null);
   // const [windowSize, setWindowSize] = useState("Big");
   const [timeValue, setTimeValue] = useState(0);
