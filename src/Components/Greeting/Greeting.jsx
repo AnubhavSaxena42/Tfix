@@ -6,7 +6,7 @@ import { SMALL_WINDOW_WIDTH } from "../Timeline/constants";
 function Greeting() {
   const [windowSize, setWindowSize] = useState("Big");
   const values = {
-    username: "Anubhav",
+    username: "Kush",
     timeOfTheDay: "Morning",
   };
 
