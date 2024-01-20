@@ -56,7 +56,7 @@ function Timeline({
       if (windowSize === "Small") {
         console.log("Setting window Size to big");
         setWindowSize("Big");
-        transitionToBigWindowState();
+        transitionToSmallWindowState();
       }
     }
   };
@@ -72,7 +72,9 @@ function Timeline({
   };
 
   useEffect(() => {
-    updateDimension();
+    setTimeout(() => {
+      updateDimension();
+    }, 1000);
   }, [screenSize]);
 
   return (

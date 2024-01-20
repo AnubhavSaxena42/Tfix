@@ -30,7 +30,7 @@ export const useFilters = ({ filters, setFilters, initialDelay }) => {
       if (windowSize === "Small") {
         console.log("Setting window Size to big");
         setWindowSize("Big");
-        transitionToBigWindowState();
+        transitionToSmallWindowState();
       }
     }
   };
@@ -65,6 +65,8 @@ export const useFilters = ({ filters, setFilters, initialDelay }) => {
   };
 
   const transitionToBigWindowState = () => {
+    transitionToSmallWindowState();
+    return;
     gsap.to(".filterModal", {
       height: "300px",
       width: "300px",
@@ -114,7 +116,9 @@ export const useFilters = ({ filters, setFilters, initialDelay }) => {
 
   useEffect(() => {
     window.addEventListener("resize", updateDimension);
-    updateDimension();
+    setTimeout(() => {
+      updateDimension();
+    }, 1000);
     return () => {
       window.removeEventListener("resize", updateDimension);
     };

@@ -49,7 +49,7 @@ export default function App() {
       if (windowSize === "Small") {
         console.log("Setting window Size to big");
         setWindowSize("Big");
-        transitionToBigWindowState();
+        transitionToSmallWindowState();
       }
     }
   };
@@ -74,6 +74,8 @@ export default function App() {
   };
 
   const transitionToBigWindowState = () => {
+    transitionToSmallWindowState();
+    return;
     const notificationListContainer = notificationListContainerRef.current;
     if (notificationListContainer) {
       gsap.to(notificationListContainer, {

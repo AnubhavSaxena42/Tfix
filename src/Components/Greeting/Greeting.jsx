@@ -20,6 +20,8 @@ function Greeting() {
   }
 
   const transitionToBigWindowState = () => {
+    transitionToSmallWindowState();
+    return;
     gsap.to(greetingRef, {
       fontSize: "32px",
     });
@@ -44,7 +46,7 @@ function Greeting() {
       if (windowSize === "Small") {
         console.log("Setting window Size to big");
         setWindowSize("Big");
-        transitionToBigWindowState();
+        transitionToSmallWindowState();
       }
     }
   };
@@ -70,7 +72,9 @@ function Greeting() {
 
   useEffect(() => {
     greetingEnterAnimation();
-    updateDimension();
+    setTimeout(() => {
+      updateDimension();
+    }, 1000);
   }, []);
   return (
     <div ref={(el) => (greetingRef = el)} className={styles.greeting}>

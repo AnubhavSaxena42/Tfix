@@ -245,6 +245,8 @@ const Spikes = ({
   }, [spikeRef, requestsHolderRef]);
 
   const transitionToBigWindowState = () => {
+    transitionToSmallWindowState();
+    return;
     console.log("SpikeEffectCheck:setting big");
     gsap.set(spikeRef.current, {
       height: "30px",
@@ -265,7 +267,7 @@ const Spikes = ({
       transitionToSmallWindowState();
     } else {
       console.log("Setting window Size to small");
-      transitionToBigWindowState();
+      transitionToSmallWindowState();
     }
   }, [windowSize]);
 

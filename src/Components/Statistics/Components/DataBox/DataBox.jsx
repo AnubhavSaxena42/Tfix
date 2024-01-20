@@ -36,7 +36,7 @@ function DataBox({
       if (windowSize === "Small") {
         console.log("Setting window Size to big");
         setWindowSize("Big");
-        transitionToBigWindowState();
+        transitionToSmallWindowState();
       }
     }
   };
@@ -69,6 +69,8 @@ function DataBox({
   );
 
   const transitionToBigWindowState = () => {
+    transitionToSmallWindowState();
+    return;
     gsap.to(dataBox.current.querySelectorAll(".otherLetters"), {
       fontSize: "18px",
     });
@@ -109,7 +111,9 @@ function DataBox({
 
   useEffect(() => {
     dataBoxEnterAnimation();
-    updateDimension();
+    setTimeout(() => {
+      updateDimension();
+    }, 1000);
   }, []);
 
   //dataBox Enter

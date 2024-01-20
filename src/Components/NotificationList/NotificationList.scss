@@ -1,10 +1,11 @@
 .notificationListContainer {
   height: 20%;
-  min-height: 300px;
+  min-height: 160px;
   width: 100%;
-  font-family: Jura;
+  font-family: "Jura";
   overflow: scroll;
-  font-size: 16px;
+  font-size: 10px;
+  opacity: 0;
   // border: 1px solid slateblue;
 }
 

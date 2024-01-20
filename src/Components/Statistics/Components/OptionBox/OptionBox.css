@@ -19,21 +19,21 @@
 }
 .counterValueText {
   /* border: 1px solid seagreen; */
-  font-size: 44px;
+  font-size: 24px;
 }
 
 .firstLetter {
-  font-size: 24px;
+  font-size: 16px;
 }
 .firstLetterMargin {
   margin-left: 5px;
 }
 .otherLetters {
-  font-size: 18px;
+  font-size: 14px;
 }
 
 .dateValue {
-  font-size: 12px;
+  font-size: 8px;
   /* border: 1px solid sienna; */
 }
 

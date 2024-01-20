@@ -50,12 +50,14 @@ function OptionBox({
       if (windowSize === "Small") {
         console.log("Setting window Size to big");
         setWindowSize("Big");
-        transitionToBigWindowState();
+        transitionToSmallWindowState();
       }
     }
   };
   console.log("Updating Dimension Function:", windowSize);
   const transitionToBigWindowState = () => {
+    transitionToSmallWindowState();
+    return;
     gsap.to(boxRef.current.querySelectorAll(".otherLetters"), {
       fontSize: "18px",
     });
@@ -304,7 +306,9 @@ function OptionBox({
   useEffect(() => {
     // setUnselectedValues();
     optionBoxEnterAnimation();
-    updateDimension();
+    setTimeout(() => {
+      updateDimension();
+    }, 1000);
   }, []);
   return (
     <div
