@@ -114,6 +114,7 @@ function Timeline({
                   style={style}
                   dateMap={dateMap}
                   getRandomInt={getRandomInt}
+                  selectedRange={selectedRange}
                   selectedDate={selectedDate}
                   getObjectAtSpike={getObjectAtSpike}
                   onPressSpike={onPressSpike}

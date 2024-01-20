@@ -2,6 +2,7 @@ import dayjs from "dayjs";
 import { useEffect, useRef, useState } from "react";
 import { DATES, RANGE_OPTIONS } from "./constants";
 import gsap, { Power3 } from "gsap";
+import { SELECTABLE_RANGES } from "../../core/constants/constants";
 
 export const useTimeline = ({
   dateMap,
@@ -103,7 +104,13 @@ export const useTimeline = ({
 
       newScrollMonthDateData: findDataByIndex(newScrollMonthDate),
     });
-    if (selectedDate.format("YYYY") !== spike?.format("YYYY")) {
+    if (selectedRange === SELECTABLE_RANGES.THIS_WEEK) {
+      listref.current.scrollToItem(
+        findIndexByDate(spike?.startOf("week")),
+        "start"
+      );
+      setScrollMonthDate(findDataByIndex(newScrollMonthDate));
+    } else if (selectedDate.format("YYYY") !== spike?.format("YYYY")) {
       listref.current.scrollToItem(newScrollMonthDate, "start");
       //   setScrollMonthDate(findDataByIndex(newScrollMonthDate)?.date);
 
@@ -169,6 +176,20 @@ export const useTimeline = ({
   // useEffect(() => {
   //   constructDateMap();
   // }, []);
+  useEffect(() => {
+    if (mapLoading) return;
+    if (selectedRange === SELECTABLE_RANGES.THIS_WEEK) {
+      listref.current.scrollToItem(
+        findIndexByDate(selectedDate?.startOf("week")),
+        "start"
+      );
+    } else {
+      listref.current.scrollToItem(
+        findIndexByDate(selectedDate.startOf("month")),
+        "start"
+      );
+    }
+  }, [selectedRange, mapLoading]);
 
   useEffect(() => {
     console.log("ListscrollingDebug:useEffect Ran", mapLoading);

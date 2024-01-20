@@ -1,13 +1,17 @@
-import gsap from "gsap";
+import gsap, { Power1 } from "gsap";
 import { Power3 } from "gsap";
 import React, { useEffect, useRef, useState } from "react";
 import "./Spikes.css";
 import { generateData } from "../../../../core/helpers/helpers";
+import dayjs from "dayjs";
+import { SELECTABLE_RANGES } from "../../../../core/constants/constants";
+import { Power2 } from "gsap";
 
 const Spikes = ({
   item,
   style,
   getRandomInt,
+  selectedRange,
   dateMap,
   getObjectAtSpike,
   selectedDate,
@@ -18,6 +22,7 @@ const Spikes = ({
   const requestsHolderRef = useRef(null);
   const spikeRef = useRef(null);
   const spikeContainerRef = useRef(null);
+  const spikeMonthRef = useRef(null);
   const dayNumberRef = useRef(null);
   console.log("object at spike:", objectAtSpike);
   const loadSpike = () => {
@@ -69,6 +74,40 @@ const Spikes = ({
     );
   }, [objectAtSpike]);
 
+  const findOutIfItemIsInSelectedRange = () => {
+    if (selectedRange === SELECTABLE_RANGES.TODAY) return false;
+    if (selectedRange === SELECTABLE_RANGES.THIS_WEEK) {
+      const startOfWeekDate1 = dayjs(item).startOf("week");
+      const startOfWeekDate2 = dayjs(selectedDate).startOf("week");
+
+      if (startOfWeekDate1.isSame(startOfWeekDate2, "day")) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    if (selectedRange === SELECTABLE_RANGES.THIS_MONTH) {
+      const startOfMonthDate1 = dayjs(item).startOf("month");
+      const startOfMonthDate2 = dayjs(selectedDate).startOf("month");
+      if (startOfMonthDate1.isSame(startOfMonthDate2, "month")) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  };
+
+  const findBackgroundForRange = () => {
+    switch (selectedRange) {
+      case SELECTABLE_RANGES.THIS_MONTH:
+        return "linear-gradient(80deg, rgba(255,128,1,1), rgba(255,255,255,1) 99.99%)";
+      case SELECTABLE_RANGES.THIS_WEEK:
+        return "linear-gradient(80deg, rgb(51,205,50,1), rgba(255,255,255,1) 99.99%)";
+      default:
+        return;
+    }
+  };
+
   useEffect(() => {
     if (item?.format("YYYY-MM-DD") === selectedDate.format("YYYY-MM-DD")) {
       console.log("Selected Date UseEffect Ran", item, selectedDate);
@@ -85,6 +124,7 @@ const Spikes = ({
         color: "black",
       });
       gsap.to(dayNumberRef.current, { y: 10, duration: 0.2 });
+      gsap.to(spikeMonthRef.current, { y: 10, duration: 0.2 });
       let b1 =
         "linear-gradient(0deg, rgba(255,255,255,1), rgba(255,255,255,1) 100.00%)";
       let b2 =
@@ -94,32 +134,54 @@ const Spikes = ({
         .add(gsap.set(spikeRef.current, { background: b1 }))
         .add(
           gsap.to(spikeRef.current, {
-            ease: "ease",
-            duration: 0.7,
+            ease: Power2.easeInOut,
+            duration: 0.85,
             background: b2,
           })
         );
     } else {
+      const isItemInSelectedRange = findOutIfItemIsInSelectedRange();
       gsap.to(spikeRef.current, { scaleY: 1, duration: 0.2 });
       gsap.to(requestsHolderRef.current, { y: 0, duration: 0.2 });
       gsap.to(dayNumberRef.current, { y: 0, duration: 0.2 });
+      gsap.to(spikeMonthRef.current, { y: 0, duration: 0.2 });
+      let b1 =
+        "linear-gradient(0deg, rgba(255,255,255,1), rgba(255,255,255,1) 100.00%)";
+      let b2 =
+        "linear-gradient(80deg, rgba(37,98,255,1), rgba(255,255,255,1) 99.99%)";
+      if (isItemInSelectedRange) {
+        gsap
+          .timeline({ repeat: 0, yoyo: false })
+          .add(gsap.set(spikeRef.current, { background: b1 }))
+          .add(
+            gsap.to(spikeRef.current, {
+              ease: Power2.easeInOut,
+              duration: 0.85,
+              background: findBackgroundForRange(),
+            })
+          );
+      }
     }
-  }, [selectedDate]);
+  }, [selectedDate?.format("YYYY/MM/DD")]);
 
   useEffect(() => {
     const currentSpike = spikeRef.current;
     const currentRequests = requestsHolderRef.current;
     const spikeContainer = spikeContainerRef.current;
+    const spikeMonth = spikeMonthRef.current;
     const dayNumber = dayNumberRef.current;
     spikeContainerRef.current.addEventListener("mouseover", () => {
       const prev = spikeContainerRef.current.previousElementSibling;
       const next = spikeContainerRef.current.nextElementSibling;
-      const [nextRequests, nextSpike, nextDayNumber] = next.children;
-      const [prevRequests, prevSpike, prevDayNumber] = prev.children;
+      const [nextRequests, nextSpike, nextDayNumber, nextSpikeMonth] =
+        next.children;
+      const [prevRequests, prevSpike, prevDayNumber, prevSpikeMonth] =
+        prev.children;
       if (item?.format("YYYY-MM-DD") !== selectedDate.format("YYYY-MM-DD")) {
         gsap.to(spikeRef.current, { scaleY: 2, duration: 0.2 });
         gsap.to(requestsHolderRef.current, { y: -10, duration: 0.2 });
         gsap.to(dayNumberRef.current, { y: 10, duration: 0.2 });
+        gsap.to(spikeMonthRef.current, { y: 10, duration: 0.2 });
       }
       if (
         item?.add(1, "day").format("YYYY-MM-DD") !==
@@ -128,6 +190,7 @@ const Spikes = ({
         gsap.to(nextSpike, { scaleY: 1.5, duration: 0.2 });
         gsap.to(nextRequests, { y: -5, duration: 0.2 });
         gsap.to(nextDayNumber, { y: 5, duration: 0.2 });
+        gsap.to(nextSpikeMonth, { y: 5, duration: 0.2 });
       }
 
       if (
@@ -137,17 +200,21 @@ const Spikes = ({
         gsap.to(prevSpike, { scaleY: 1.5, duration: 0.2 });
         gsap.to(prevRequests, { y: -5, duration: 0.2 });
         gsap.to(prevDayNumber, { y: 5, duration: 0.2 });
+        gsap.to(prevSpikeMonth, { y: 5, duration: 0.2 });
       }
     });
     spikeContainerRef.current.addEventListener("mouseout", () => {
       const prev = spikeContainerRef.current.previousElementSibling;
       const next = spikeContainerRef.current.nextElementSibling;
-      const [nextRequests, nextSpike, nextDayNumber] = next.children;
-      const [prevRequests, prevSpike, prevDayNumber] = prev.children;
+      const [nextRequests, nextSpike, nextDayNumber, nextSpikeMonth] =
+        next.children;
+      const [prevRequests, prevSpike, prevDayNumber, prevSpikeMonth] =
+        prev.children;
       if (item?.format("YYYY-MM-DD") !== selectedDate.format("YYYY-MM-DD")) {
         gsap.to(spikeRef.current, { scaleY: 1, duration: 0.2 });
         gsap.to(requestsHolderRef.current, { y: 0, duration: 0.2 });
         gsap.to(dayNumberRef.current, { y: 0, duration: 0.2 });
+        gsap.to(spikeMonthRef.current, { y: 0, duration: 0.2 });
       }
       if (
         item?.add(1, "day").format("YYYY-MM-DD") !==
@@ -156,6 +223,7 @@ const Spikes = ({
         gsap.to(nextSpike, { scaleY: 1, duration: 0.2 });
         gsap.to(nextRequests, { y: 0, duration: 0.2 });
         gsap.to(nextDayNumber, { y: 0, duration: 0.2 });
+        gsap.to(nextSpikeMonth, { y: 0, duration: 0.2 });
       }
       if (
         item?.subtract(1, "day").format("YYYY-MM-DD") !==
@@ -164,6 +232,7 @@ const Spikes = ({
         gsap.to(prevSpike, { scaleY: 1, duration: 0.2 });
         gsap.to(prevRequests, { y: 0, duration: 0.2 });
         gsap.to(prevDayNumber, { y: 0, duration: 0.2 });
+        gsap.to(prevSpikeMonth, { y: 0, duration: 0.2 });
       }
     });
     return () => {
@@ -229,6 +298,10 @@ const Spikes = ({
       ></div>
       <div ref={dayNumberRef} className="dayNumber">
         {item?.date()}
+      </div>
+
+      <div ref={spikeMonthRef} className="spikeMonth">
+        {item?.date() === 1 ? `${item?.format("MMMM").slice(0, 3)}` : ``}
       </div>
     </div>
   );

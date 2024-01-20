@@ -24,6 +24,13 @@
   border: 0px;
 }
 
+.spikeMonth {
+  color: rgb(120, 120, 120);
+  font-size: 10px;
+  margin-top: 4px;
+  letter-spacing: 1px;
+}
+
 .spike {
   height: 30px;
 
