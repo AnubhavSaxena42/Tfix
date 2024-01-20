@@ -12,6 +12,7 @@ import {
   REQUEST_STATUS,
   SELECTABLE_RANGES,
 } from "../../core/constants/constants";
+import "./statistics.css";
 
 function Statistics({
   dateMap,
@@ -1263,211 +1264,114 @@ function Statistics({
   return (
     <div
       ref={statsRef}
-      style={{
-        //Add Minimum height on statistics
-        height: "50%",
-        // height: "00px",
-        minHeight: "200px",
-        width: "100%",
-        flexDirection: "column",
-        border: "1px solid red",
-        alignItems: "center",
-        alignSelf: "center",
-        display: "flex",
-        overflow: "hidden",
-      }}
+      className="statisticsContainer"
+      // style={{
+      //   //Add Minimum height on statistics
+      //   height: "50%",
+      //   minHeight: "200px",
+      //   width: "100%",
+      //   flexDirection: "column",
+      //   border: "1px solid red",
+      //   alignItems: "center",
+      //   alignSelf: "center",
+      //   display: "flex",
+      //   overflow: "hidden",
+      // }}
     >
       {/* Filters */}
-      <div
-        // onClick={() => calculateRequestsData(selectedDate)}
-        style={{
-          height: "90px",
-          width: "60%",
-          alignSelf: "flex-start",
-          border: "1px solid yellow",
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "flex-start",
-          flexWrap: "wrap",
-          padding: "5px 5px",
-          color: "white",
-          fontFamily: "Jura",
-          fontSize: "12px",
-          // paddingTop: "5px",
-        }}
-      >
+      <div className="filtersContainer">
         <div
-          onClick={filterModalExitAnimation}
-          style={{
-            height: "20px",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            marginRight: "5px",
-          }}
+          className="filterByTextContainer"
+          // style={{
+          //   height: "20px",
+          //   display: "flex",
+          //   justifyContent: "center",
+          //   alignItems: "center",
+          // }}
         >
           Filter by:
         </div>
-        {filters.companies.map((company) => (
-          <div
-            key={company}
-            style={{
-              height: "20px",
-              padding: "3px",
-              margin: "0px 3px",
-              border: "1px solid #838383",
-              borderRadius: "5px",
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center",
-              fontSize: "12px",
-            }}
-          >
-            {`comp.-${company}`}
-            <div
-              style={{
-                height: "10px",
-                width: "10px",
-                marginLeft: "2px",
-                cursor: "pointer",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                backgroundColor: "#ff7425",
-                borderRadius: "50%",
-              }}
-            >
-              <ImCross
-                onClick={() => {
-                  removeFilterFromTag({
-                    type: filterTypes.COMPANY,
-                    value: company,
-                  });
-                }}
-                size={"5px"}
-                color="#0f0f0f"
-              />
-            </div>
-          </div>
-        ))}
-        {filters.types.map((type) => (
-          <div
-            key={type}
-            style={{
-              height: "20px",
-              padding: "3px",
-              margin: "0px 3px",
-              fontSize: "12px",
-              border: "1px solid #838383",
-              borderRadius: "5px",
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            {`type-${type}`}
-            <div
-              style={{
-                height: "10px",
-                width: "10px",
-                marginLeft: "2px",
-                cursor: "pointer",
-                backgroundColor: "#ff7425",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                borderRadius: "50%",
-              }}
-            >
-              <ImCross
-                onClick={() => {
-                  removeFilterFromTag({
-                    type: filterTypes.ATTACHMENT,
-                    value: type,
-                  });
-                }}
-                size={"5px"}
-                color="#0f0f0f"
-              />
-            </div>
-          </div>
-        ))}
+
         <div
-          style={{
-            zIndex: 2,
-            marginLeft: "5px",
-            height: "20px",
-            width: "20px",
-            borderRadius: "50%",
-            backgroundColor: "#2562ff",
-            cursor: "pointer",
-            position: "relative",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
+          className="filterByButton"
+          // style={{
+          //   zIndex: 2,
+          //   margin: "0px 5px",
+          //   height: "20px",
+          //   width: "20px",
+          //   borderRadius: "50%",
+          //   backgroundColor: "#2562ff",
+          //   cursor: "pointer",
+          //   position: "relative",
+          //   display: "flex",
+          //   justifyContent: "center",
+          //   alignItems: "center",
+          // }}
           onClick={filterModalEnterAnimation}
         >
           <FaPlus color={"#242124"} size={10} />
           <div
             ref={filterModalRef}
-            style={{
-              height: "300px",
-              padding: "10px",
-              display: "flex",
-              flexDirection: "column",
-              opacity: 0,
-              visibility: "hidden",
-              cursor: "default",
-              width: "300px",
-              backgroundColor: "#242124",
-              borderRadius: "8px",
-              position: "absolute",
-              left: "25px",
-              top: "10px",
-            }}
+            className="filterModal"
+            // style={{
+            //   height: "300px",
+            //   padding: "10px",
+            //   display: "flex",
+            //   flexDirection: "column",
+            //   opacity: 0,
+            //   visibility: "hidden",
+            //   cursor: "default",
+            //   width: "300px",
+            //   backgroundColor: "#242124",
+            //   borderRadius: "8px",
+            //   position: "absolute",
+            //   left: "25px",
+            //   top: "10px",
+            // }}
           >
             <div
-              style={{
-                width: "100%",
-                height: "80%",
-                // backgroundColor: "yellow",
-                display: "flex",
-                flexDirection: "row",
-              }}
+              className="filterModalListsContainer"
+              // style={{
+              //   width: "100%",
+              //   height: "80%",
+              //   // backgroundColor: "yellow",
+              //   display: "flex",
+              //   flexDirection: "row",
+              // }}
             >
               <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  flex: 1,
-                  // border: "1px solid saddlebrown",
-                  margin: "0px 2px",
-                }}
+                className="filterModalListContainer"
+                // style={{
+                //   display: "flex",
+                //   flexDirection: "column",
+                //   flex: 1,
+                //   // border: "1px solid saddlebrown",
+                //   margin: "0px 2px",
+                // }}
               >
                 <div
-                  style={{
-                    height: "30px",
-                    width: "100%",
-                    // border: "1px solid green",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    color: "white",
-                  }}
+                  className="filterModalListTitleContainer"
+                  // style={{
+                  //   height: "30px",
+                  //   width: "100%",
+                  //   // border: "1px solid green",
+                  //   display: "flex",
+                  //   justifyContent: "center",
+                  //   alignItems: "center",
+                  //   color: "white",
+                  // }}
                 >
                   Company
                 </div>
                 <div
-                  style={{
-                    flex: 1,
-                    overflow: "scroll",
-                    backgroundColor: "#0f0f0f",
+                  className="filterModalListScrollView"
+                  // style={{
+                  //   flex: 1,
+                  //   overflow: "scroll",
+                  //   backgroundColor: "#0f0f0f",
 
-                    borderRadius: "8px",
-                  }}
+                  //   borderRadius: "8px",
+                  // }}
                 >
                   {COMPANIES.map((company) => (
                     <div
@@ -1478,32 +1382,34 @@ function Statistics({
                         });
                       }}
                       key={company}
-                      style={{
-                        width: "100%",
-                        height: "30px",
-                        display: "flex",
-                        flexDirection: "row",
-                        padding: "0px 5px",
-                        justifyContent: "space-between",
-                        color: "white",
-                        cursor: "pointer",
-                        backgroundColor: "#0f0f0f",
-                        // border: "1px solid pink",
-                        borderBottom: "0.4px solid white",
-                        alignItems: "center",
-                      }}
+                      className="filterModalListItem"
+                      // style={{
+                      //   width: "100%",
+                      //   height: "30px",
+                      //   display: "flex",
+                      //   flexDirection: "row",
+                      //   padding: "0px 5px",
+                      //   justifyContent: "space-between",
+                      //   color: "white",
+                      //   cursor: "pointer",
+                      //   backgroundColor: "#0f0f0f",
+                      //   // border: "1px solid pink",
+                      //   borderBottom: "0.4px solid white",
+                      //   alignItems: "center",
+                      // }}
                     >
                       {company}
                       <div
-                        style={{
-                          height: "17px",
-                          width: "17px",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          borderRadius: "4px",
-                          border: "1px solid white",
-                        }}
+                        className="filterModalListItemCheckbox"
+                        // style={{
+                        //   height: "17px",
+                        //   width: "17px",
+                        //   display: "flex",
+                        //   justifyContent: "center",
+                        //   alignItems: "center",
+                        //   borderRadius: "4px",
+                        //   border: "1px solid white",
+                        // }}
                       >
                         {modalFilters.companies.includes(company) && (
                           <FaCheck size={10} color={"white"} />
@@ -1515,34 +1421,37 @@ function Statistics({
               </div>
 
               <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  flex: 1,
-                  // border: "1px solid saddlebrown",
-                  margin: "0px 2px",
-                }}
+                className="filterModalListContainer"
+                // style={{
+                //   display: "flex",
+                //   flexDirection: "column",
+                //   flex: 1,
+                //   // border: "1px solid saddlebrown",
+                //   margin: "0px 2px",
+                // }}
               >
                 <div
-                  style={{
-                    height: "30px",
-                    width: "100%",
-                    // border: "1px solid green",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    color: "white",
-                  }}
+                  className="filterModalListTitleContainer"
+                  // style={{
+                  //   height: "30px",
+                  //   width: "100%",
+                  //   // border: "1px solid green",
+                  //   display: "flex",
+                  //   justifyContent: "center",
+                  //   alignItems: "center",
+                  //   color: "white",
+                  // }}
                 >
                   Type
                 </div>
                 <div
-                  style={{
-                    flex: 1,
-                    overflow: "scroll",
-                    backgroundColor: "#0f0f0f",
-                    borderRadius: "8px",
-                  }}
+                  className="filterModalListScrollView"
+                  // style={{
+                  //   flex: 1,
+                  //   overflow: "scroll",
+                  //   backgroundColor: "#0f0f0f",
+                  //   borderRadius: "8px",
+                  // }}
                 >
                   {ATTACHMENT_TYPES.map((type) => (
                     <div
@@ -1552,33 +1461,35 @@ function Statistics({
                           value: type,
                         });
                       }}
+                      className="filterModalListItem"
                       key={type}
-                      style={{
-                        width: "100%",
-                        height: "30px",
-                        display: "flex",
-                        flexDirection: "row",
-                        padding: "0px 5px",
-                        justifyContent: "space-between",
-                        color: "white",
-                        cursor: "pointer",
-                        backgroundColor: "#0f0f0f",
-                        borderBottom: "0.4px solid white",
-                        // border: "1px solid pink",
-                        alignItems: "center",
-                      }}
+                      // style={{
+                      //   width: "100%",
+                      //   height: "30px",
+                      //   display: "flex",
+                      //   flexDirection: "row",
+                      //   padding: "0px 5px",
+                      //   justifyContent: "space-between",
+                      //   color: "white",
+                      //   cursor: "pointer",
+                      //   backgroundColor: "#0f0f0f",
+                      //   borderBottom: "0.4px solid white",
+                      //   // border: "1px solid pink",
+                      //   alignItems: "center",
+                      // }}
                     >
                       {type}
                       <div
-                        style={{
-                          height: "17px",
-                          width: "17px",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          borderRadius: "4px",
-                          border: "1px solid white",
-                        }}
+                        className="filterModalListItemCheckbox"
+                        // style={{
+                        //   height: "17px",
+                        //   width: "17px",
+                        //   display: "flex",
+                        //   justifyContent: "center",
+                        //   alignItems: "center",
+                        //   borderRadius: "4px",
+                        //   border: "1px solid white",
+                        // }}
                       >
                         {modalFilters.types.includes(type) && (
                           <FaCheck size={10} color={"white"} />
@@ -1596,30 +1507,134 @@ function Statistics({
                 confirmSelection();
                 filterModalExitAnimation();
               }}
-              style={{
-                flex: 1,
-                height: "80%",
-                display: "flex",
-                flexDirection: "row",
-                cursor: "pointer",
-                backgroundColor: "#2562ff",
-                borderRadius: "8px",
-                marginTop: "10px",
-                marginLeft: "2px",
-                marginRight: "2px",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
+              className="filterModalConfirmSelectionButton"
+              // style={{
+              //   flex: 1,
+              //   height: "80%",
+              //   display: "flex",
+              //   flexDirection: "row",
+              //   cursor: "pointer",
+              //   backgroundColor: "#2562ff",
+              //   borderRadius: "8px",
+              //   marginTop: "10px",
+              //   marginLeft: "2px",
+              //   marginRight: "2px",
+              //   justifyContent: "center",
+              //   alignItems: "center",
+              // }}
             >
               Confirm Selection
             </div>
           </div>
         </div>
-      </div>
+        <div
+          className="appliedFiltersContainer"
+          // style={{
+          //   flex: 1,
+          //   border: "1px solid green",
+          //   display: "flex",
+          //   flexDirection: "row",
+          //   overflow: "scroll",
+          // }}
+        >
+          {filters.companies.map((company) => (
+            <div
+              key={company}
+              className="appliedFilterItem"
+              // style={{
+              //   height: "20px",
+              //   minWidth: "90px",
+              //   padding: "3px",
+              //   margin: "0px 3px",
+              //   border: "1px solid #838383",
+              //   borderRadius: "5px",
+              //   display: "flex",
+              //   flexDirection: "row",
+              //   justifyContent: "center",
+              //   alignItems: "center",
+              //   fontSize: "12px",
+              // }}
+            >
+              {`comp.-${company}`}
+              <div
+                className="filterItemRemoveButton"
+                // style={{
+                //   height: "10px",
+                //   width: "10px",
+                //   marginLeft: "2px",
+                //   cursor: "pointer",
+                //   display: "flex",
+                //   justifyContent: "center",
+                //   alignItems: "center",
+                //   backgroundColor: "#ff7425",
+                //   borderRadius: "50%",
+                // }}
+              >
+                <ImCross
+                  onClick={() => {
+                    removeFilterFromTag({
+                      type: filterTypes.COMPANY,
+                      value: company,
+                    });
+                  }}
+                  size={"5px"}
+                  color="#0f0f0f"
+                />
+              </div>
+            </div>
+          ))}
 
+          {filters.types.map((type) => (
+            <div
+              key={type}
+              className="appliedFilterItem"
+              // style={{
+              //   height: "20px",
+              //   minWidth: "90px",
+              //   padding: "3px",
+              //   margin: "0px 3px",
+              //   fontSize: "12px",
+              //   border: "1px solid #838383",
+              //   borderRadius: "5px",
+              //   display: "flex",
+              //   flexDirection: "row",
+              //   justifyContent: "center",
+              //   alignItems: "center",
+              // }}
+            >
+              {`type-${type}`}
+              <div
+                className="filterItemRemoveButton"
+                // style={{
+                //   height: "10px",
+                //   width: "10px",
+                //   marginLeft: "2px",
+                //   cursor: "pointer",
+                //   backgroundColor: "#ff7425",
+                //   display: "flex",
+                //   justifyContent: "center",
+                //   alignItems: "center",
+                //   borderRadius: "50%",
+                // }}
+              >
+                <ImCross
+                  onClick={() => {
+                    removeFilterFromTag({
+                      type: filterTypes.ATTACHMENT,
+                      value: type,
+                    });
+                  }}
+                  size={"5px"}
+                  color="#0f0f0f"
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
       <div
         style={{
-          height: "180px",
+          height: "300px",
           width: "100%",
           border: "1px solid yellow",
           // marginBottom: "5%",
