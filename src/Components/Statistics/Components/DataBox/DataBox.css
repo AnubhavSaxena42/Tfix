@@ -12,19 +12,18 @@
 .counterDataBox {
   font-size: 44px;
 }
-
 .counterValueText {
   /* font-size: 24px; mobile */
-  font-size: 44px;
+  font-size: 36px;
 }
 .firstLetter {
   /* font-size: 16px; mobile*/
-  font-size: 24px;
+  font-size: 22px;
 }
 
 .otherLetters {
   /* font-size: 14px; mobile */
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .dateValue {
