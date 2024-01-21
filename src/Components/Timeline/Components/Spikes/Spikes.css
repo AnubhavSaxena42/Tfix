@@ -32,7 +32,8 @@
 }
 
 .spike {
-  height: 20px;
+  /* height: 20px; mobile */
+  height: 30px;
 
   /* height: 15px; */
   width: 3px;

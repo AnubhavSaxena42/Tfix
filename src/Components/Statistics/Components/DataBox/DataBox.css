@@ -14,14 +14,17 @@
 }
 
 .counterValueText {
-  font-size: 24px;
+  /* font-size: 24px; mobile */
+  font-size: 44px;
 }
 .firstLetter {
-  font-size: 16px;
+  /* font-size: 16px; mobile*/
+  font-size: 24px;
 }
 
 .otherLetters {
-  font-size: 14px;
+  /* font-size: 14px; mobile */
+  font-size: 18px;
 }
 
 .dateValue {
