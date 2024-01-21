@@ -18,27 +18,25 @@
   /* border: 1px solid blueviolet; */
 }
 .counterValueText {
-  /* font-size: 24px; mobile */
-  font-size: 36px;
+  font-size: 28px;
+  /* font-size: 36px; */
 }
 .firstLetter {
-  /* font-size: 16px; mobile*/
-  font-size: 22px;
+  font-size: 16px;
+  /* font-size: 22px; */
 }
 
 .otherLetters {
-  /* font-size: 14px; mobile */
-  font-size: 16px;
+  font-size: 14px;
+  /* font-size: 16px; */
+}
+
+.dateValue {
+  font-size: 12px;
 }
 
 .firstLetterMargin {
   margin-left: 5px;
-}
-
-.dateValue {
-  /* font-size: 8px; mobile */
-  font-size: 10px;
-  /* border: 1px solid sienna; */
 }
 
 .counterContainer {
