@@ -202,7 +202,9 @@ export const useTimeline = ({
       );
     } else {
       listref.current.scrollToItem(
-        findIndexByDate(selectedDate.startOf("month")),
+        screenSize.width < SMALL_WINDOW_WIDTH
+          ? findIndexByDate(selectedDate)
+          : findIndexByDate(selectedDate.startOf("month")),
         "start"
       );
     }
