@@ -101,11 +101,11 @@ export const useFilters = ({ filters, setFilters, initialDelay }) => {
       ".filtersContainer",
       {
         opacity: 0,
-        y: 20,
+        // y: 20,
       },
       {
         opacity: 1,
-        y: 0,
+        // y: 0,
         duration: 1,
         ease: "power2.in",
         delay: 6,
