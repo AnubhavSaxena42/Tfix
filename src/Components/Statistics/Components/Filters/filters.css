@@ -1,5 +1,6 @@
 .filtersContainer {
   height: 50px;
+  min-height: 50px;
   width: 100%;
   align-self: flex-start;
   /* border: 1px solid yellow; */
