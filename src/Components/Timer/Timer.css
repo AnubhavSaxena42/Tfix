@@ -18,6 +18,7 @@
   min-height: 60px;
   display: flex;
   flex-direction: row;
+  padding: 0% 10%;
   align-items: center;
 }
 

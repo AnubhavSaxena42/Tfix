@@ -1,5 +1,6 @@
 .greeting {
   /* font-size: 24px; Mobile */
+  padding: 0% 10%;
   font-size: 28px;
   color: white;
   letter-spacing: 2px;
