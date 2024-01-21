@@ -28,6 +28,7 @@ function Timeline({
     screenSize,
     findDataByIndex,
     getRandomInt,
+    windowSize,
     timelineRef,
     getObjectAtSpike,
   } = useTimeline({
@@ -39,50 +40,6 @@ function Timeline({
     selectedDate,
     setSelectedDate,
   });
-
-  //Transition Animations
-  const [windowSize, setWindowSize] = useState("Big");
-
-  const updateDimension = () => {
-    const { width, height } = screenSize;
-
-    if (width <= SMALL_WINDOW_WIDTH) {
-      if (windowSize === "Big") {
-        console.log("Setting Window Size to small");
-        setWindowSize("Small");
-        transitionToSmallWindowState();
-      }
-    } else {
-      if (windowSize === "Small") {
-        console.log("Setting window Size to big");
-        setWindowSize("Big");
-        transitionToBigWindowState();
-        // transitionToSmallWindowState
-      }
-    }
-  };
-  const transitionToBigWindowState = () => {
-    gsap.set(listref.current, { overflow: "hidden" });
-    // gsap.to(".timelineContainer", {
-    //   paddingTop: "10px",
-    // });
-    // gsap.set(listref.current, {
-    //   overflow: "hidden",
-    // });
-  };
-  const transitionToSmallWindowState = () => {
-    gsap.to(".timelineContainer", {
-      paddingTop: "30px",
-    });
-    console.log("Trying to set to scroll:", listref.current);
-    gsap.set(listref.current, { overflow: "scroll" });
-  };
-
-  useEffect(() => {
-    setTimeout(() => {
-      updateDimension();
-    }, 1000);
-  }, [screenSize]);
 
   return (
     <div ref={timelineRef} className="timelineContainer">

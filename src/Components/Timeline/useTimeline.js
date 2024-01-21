@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import { useEffect, useRef, useState } from "react";
-import { DATES, RANGE_OPTIONS } from "./constants";
+import { DATES, RANGE_OPTIONS, SMALL_WINDOW_WIDTH } from "./constants";
 import gsap, { Power3 } from "gsap";
 import { SELECTABLE_RANGES } from "../../core/constants/constants";
 
@@ -16,7 +16,7 @@ export const useTimeline = ({
   const INITIAL_DELAY = 1.5;
   const [scrollMonthDate, setScrollMonthDate] = useState(dayjs().startOf("M"));
   const [screenSize, setScreenSize] = useState(getCurrentDimension());
-
+  const [windowSize, setWindowSize] = useState("Big");
   let listref = useRef(null);
   let timelineRef = useRef(null);
 
@@ -111,13 +111,19 @@ export const useTimeline = ({
       );
       setScrollMonthDate(findDataByIndex(newScrollMonthDate));
     } else if (selectedDate.format("YYYY") !== spike?.format("YYYY")) {
-      listref.current.scrollToItem(newScrollMonthDate, "start");
+      listref.current.scrollToItem(
+        windowSize === "Small" ? findIndexByDate(spike) : newScrollMonthDate,
+        "start"
+      );
       //   setScrollMonthDate(findDataByIndex(newScrollMonthDate)?.date);
 
       setScrollMonthDate(findDataByIndex(newScrollMonthDate));
       // } else if (selectedDate.format("MMMM") !== spike?.date?.format("MMMM")) {
     } else if (selectedDate.format("MMMM") !== spike?.format("MMMM")) {
-      listref.current.scrollToItem(newScrollMonthDate, "start");
+      listref.current.scrollToItem(
+        windowSize === "Small" ? findIndexByDate(spike) : newScrollMonthDate,
+        "start"
+      );
       //   setScrollMonthDate(findDataByIndex(newScrollMonthDate)?.date);
 
       setScrollMonthDate(findDataByIndex(newScrollMonthDate));
@@ -128,8 +134,15 @@ export const useTimeline = ({
   };
 
   const scrollToTodaysMonth = () => {
+    console.log(
+      "ScrollingToTodaysMonth:",
+      windowSize,
+      windowSize === "Small" ? dayjs() : dayjs().startOf("M")
+    );
     listref.current.scrollToItem(
-      findIndexByDate(dayjs().startOf("M")),
+      findIndexByDate(
+        screenSize.width < SMALL_WINDOW_WIDTH ? dayjs() : dayjs().startOf("M")
+      ),
       "start"
     );
   };
@@ -191,8 +204,52 @@ export const useTimeline = ({
     }
   }, [selectedRange, mapLoading]);
 
+  //transition
+  //Transition Animations
+
+  const updateDimension = () => {
+    const { width, height } = screenSize;
+
+    if (width <= SMALL_WINDOW_WIDTH) {
+      if (windowSize === "Big") {
+        console.log("Setting Window Size to small");
+        setWindowSize("Small");
+        transitionToSmallWindowState();
+      }
+    } else {
+      if (windowSize === "Small") {
+        console.log("Setting window Size to big");
+        setWindowSize("Big");
+        transitionToBigWindowState();
+        // transitionToSmallWindowState
+      }
+    }
+  };
+  const transitionToBigWindowState = () => {
+    gsap.set(listref.current, { overflow: "hidden" });
+    // gsap.to(".timelineContainer", {
+    //   paddingTop: "10px",
+    // });
+    // gsap.set(listref.current, {
+    //   overflow: "hidden",
+    // });
+  };
+  const transitionToSmallWindowState = () => {
+    gsap.to(".timelineContainer", {
+      paddingTop: "30px",
+    });
+    console.log("Trying to set to scroll:", listref.current);
+    gsap.set(listref.current, { overflow: "scroll" });
+  };
+
   useEffect(() => {
-    console.log("ListscrollingDebug:useEffect Ran", mapLoading);
+    setTimeout(() => {
+      updateDimension();
+    }, 1000);
+  }, [screenSize]);
+
+  useEffect(() => {
+    console.log("ListscrollingDebug:useEffect Ran", mapLoading, screenSize);
     if (!mapLoading) scrollToTodaysMonth();
     else {
       console.log("ListScrollDebug:Effect ran for current month");
@@ -218,6 +275,7 @@ export const useTimeline = ({
     // dateMap,
     mapLoading,
     // setMapLoading,
+    windowSize,
     findIndexByDate,
     findDataByIndex,
     listref,
