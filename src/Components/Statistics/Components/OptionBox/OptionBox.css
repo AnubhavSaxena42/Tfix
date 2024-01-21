@@ -18,7 +18,7 @@
   /* border: 1px solid blueviolet; */
 }
 .counterValueText {
-  font-size: 28px;
+  font-size: 24px;
   /* font-size: 36px; */
 }
 .firstLetter {
@@ -32,9 +32,8 @@
 }
 
 .dateValue {
-  font-size: 12px;
+  font-size: 10px;
 }
-
 .firstLetterMargin {
   margin-left: 5px;
 }
