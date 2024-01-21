@@ -56,19 +56,26 @@ function Timeline({
       if (windowSize === "Small") {
         console.log("Setting window Size to big");
         setWindowSize("Big");
-        transitionToSmallWindowState();
+        transitionToBigWindowState();
+        // transitionToSmallWindowState
       }
     }
   };
   const transitionToBigWindowState = () => {
-    gsap.to(".timelineContainer", {
-      paddingTop: "10px",
-    });
+    gsap.set(listref.current, { overflow: "hidden" });
+    // gsap.to(".timelineContainer", {
+    //   paddingTop: "10px",
+    // });
+    // gsap.set(listref.current, {
+    //   overflow: "hidden",
+    // });
   };
   const transitionToSmallWindowState = () => {
     gsap.to(".timelineContainer", {
       paddingTop: "30px",
     });
+    console.log("Trying to set to scroll:", listref.current);
+    gsap.set(listref.current, { overflow: "scroll" });
   };
 
   useEffect(() => {
@@ -107,7 +114,7 @@ function Timeline({
             itemSize={25}
             layout="horizontal"
             width={getListWidth()}
-            style={{ overflow: "hidden", scrollBehavior: "smooth" }}
+            style={{ overflowY: "hidden", scrollBehavior: "smooth" }}
           >
             {({ index, style }) => {
               return (
