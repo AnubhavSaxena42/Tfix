@@ -112,7 +112,9 @@ export const useTimeline = ({
       setScrollMonthDate(findDataByIndex(newScrollMonthDate));
     } else if (selectedDate.format("YYYY") !== spike?.format("YYYY")) {
       listref.current.scrollToItem(
-        windowSize === "Small" ? findIndexByDate(spike) : newScrollMonthDate,
+        screenSize.width < SMALL_WINDOW_WIDTH
+          ? findIndexByDate(spike)
+          : newScrollMonthDate,
         "start"
       );
       //   setScrollMonthDate(findDataByIndex(newScrollMonthDate)?.date);
@@ -121,7 +123,9 @@ export const useTimeline = ({
       // } else if (selectedDate.format("MMMM") !== spike?.date?.format("MMMM")) {
     } else if (selectedDate.format("MMMM") !== spike?.format("MMMM")) {
       listref.current.scrollToItem(
-        windowSize === "Small" ? findIndexByDate(spike) : newScrollMonthDate,
+        screenSize.width < SMALL_WINDOW_WIDTH
+          ? findIndexByDate(spike)
+          : newScrollMonthDate,
         "start"
       );
       //   setScrollMonthDate(findDataByIndex(newScrollMonthDate)?.date);
